@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Journal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/themes.css">
+</head>
+<body class="theme-nebula-purple dark-mode">
+  <!-- Starfield Background -->
+  <div class="starfield"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <h1 class="logo">✨ Cosmic Journal</h1>
+      <div class="nav-links">
+        <a href="/" class="nav-link active">Write</a>
+        <a href="/calendar" class="nav-link">Calendar</a>
+        <a href="/settings" class="nav-link">Settings</a>
+      </div>
+      <div class="nav-controls">
+        <button id="themeToggle" class="icon-btn" title="Toggle dark/light mode">
+          <span class="icon">🌙</span>
+        </button>
+        <button id="searchBtn" class="icon-btn" title="Search entries">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar - Recent Entries -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Recent Entries</h2>
+        <button id="newEntryBtn" class="btn btn-primary" title="New Entry">+ New</button>
+      </div>
+      <div id="entriesList" class="entries-list">
+        <div class="empty-state">
+          <p>No entries yet.</p>
+          <p>Start writing to begin your journey.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Editor -->
+    <main class="main-content">
+      <div class="editor-container">
+        <div class="editor-header">
+          <input type="text" id="entryTitle" class="entry-title" placeholder="Entry title (optional)">
+          <div class="entry-meta">
+            <span id="entryDate" class="entry-date"></span>
+            <span id="wordCount" class="word-count">0 words</span>
+          </div>
+        </div>
+
+        <textarea id="entryContent" class="entry-content" placeholder="Start writing your thoughts..."></textarea>
+
+        <div class="editor-actions">
+          <button id="saveBtn" class="btn btn-primary">💾 Save Entry</button>
+          <button id="enhanceBtn" class="btn btn-secondary">✨ Enhance with AI</button>
+          <button id="deleteBtn" class="btn btn-danger" style="display: none;">🗑️ Delete</button>
+          <div class="auto-save-indicator" id="autoSaveIndicator"></div>
+        </div>
+      </div>
+
+      <!-- AI Questions Panel -->
+      <div class="questions-panel" id="questionsPanel">
+        <div class="questions-header">
+          <h3>💭 Reflection Questions</h3>
+          <button id="closeQuestions" class="icon-btn">✕</button>
+        </div>
+        <div id="questionsList" class="questions-list">
+          <p class="questions-hint">Keep writing... AI will suggest questions to help you reflect.</p>
+        </div>
+        <div class="questions-loading" id="questionsLoading" style="display: none;">
+          <div class="spinner"></div>
+          <p>Thinking of questions...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="searchModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔍 Search Entries</h2>
+        <button class="icon-btn" onclick="closeSearchModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search your entries...">
+        <div id="searchResults" class="search-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="loading-content">
+      <div class="spinner-large"></div>
+      <p id="loadingText">Processing...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/js/api-client.js"></script>
+  <script src="/js/theme-manager.js"></script>
+  <script src="/js/editor.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
