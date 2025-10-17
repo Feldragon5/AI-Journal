@@ -37,8 +37,14 @@ class Settings {
   }
 
   setupEventListeners() {
-    // Save AI settings
-    this.saveAiSettingsBtn.addEventListener('click', () => this.saveSettings());
+    // Done button (replace Save)
+    this.saveAiSettingsBtn.addEventListener('click', () => this.doneSettings());
+
+    // Autosave on change
+    this.customInstructionsInput.addEventListener('input', () => this.autoSaveSettings());
+    this.writingStyleSelect.addEventListener('change', () => this.autoSaveSettings());
+    this.questionFrequencySelect.addEventListener('change', () => this.autoSaveSettings());
+    this.autoEnhanceCheckbox.addEventListener('change', () => this.autoSaveSettings());
 
     // Theme selection
     this.themeOptions.forEach(option => {
@@ -68,7 +74,7 @@ class Settings {
     }
   }
 
-  async saveSettings() {
+  async autoSaveSettings() {
     try {
       const updatedSettings = {
         customInstructions: this.customInstructionsInput.value.trim(),
@@ -79,12 +85,14 @@ class Settings {
 
       await API.updateSettings(updatedSettings);
       this.settings = updatedSettings;
-
-      showToast('Settings saved successfully!', 'success');
     } catch (error) {
-      console.error('Error saving settings:', error);
-      showToast('Failed to save settings', 'error');
+      console.error('Error autosaving settings:', error);
     }
+  }
+
+  async doneSettings() {
+    await this.autoSaveSettings();
+    window.location.href = '/';
   }
 
   updateThemeSelection() {

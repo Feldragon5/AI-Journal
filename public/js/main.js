@@ -11,6 +11,7 @@ class JournalApp {
     this.currentQuestionIndex = 0;
     this.questions = [];
     this.isEnhancing = false;
+    this.autoSaveTimer = null;
 
     // Get DOM elements
     this.calendarView = document.getElementById('calendarView');
@@ -51,9 +52,12 @@ class JournalApp {
   }
 
   setupEventListeners() {
-    // Home link
-    this.homeLink.addEventListener('click', (e) => {
+    // Home link - autosave before leaving
+    this.homeLink.addEventListener('click', async (e) => {
       e.preventDefault();
+      if (this.currentView === 'editor' && this.hasUnsavedChanges) {
+        await this.autoSave();
+      }
       this.showCalendarView();
     });
 
@@ -74,18 +78,20 @@ class JournalApp {
     });
 
     // Editor buttons
-    this.saveBtn.addEventListener('click', () => this.saveEntry());
+    this.saveBtn.addEventListener('click', () => this.doneEditing());
     this.enhanceBtn.addEventListener('click', () => this.enhanceWithAI());
     this.deleteBtn.addEventListener('click', () => this.deleteEntry());
 
-    // Editor content changes
+    // Editor content changes - start autosave timer
     this.contentTextarea.addEventListener('input', () => {
       this.hasUnsavedChanges = true;
       this.updateWordCount();
+      this.startAutoSaveTimer();
     });
 
     this.titleInput.addEventListener('input', () => {
       this.hasUnsavedChanges = true;
+      this.startAutoSaveTimer();
     });
 
     // Sidebar close
@@ -98,7 +104,7 @@ class JournalApp {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
         if (this.currentView === 'editor') {
-          this.saveEntry();
+          this.doneEditing();
         }
       }
       if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
@@ -116,6 +122,7 @@ class JournalApp {
     this.calendarView.classList.add('active');
     this.editorView.classList.remove('active');
     this.closeSidebar();
+    this.stopAutoSaveTimer();
     this.renderCalendar();
   }
 
@@ -322,12 +329,48 @@ class JournalApp {
     this.dateDisplay.textContent = formatted;
   }
 
-  async saveEntry() {
+  startAutoSaveTimer() {
+    this.stopAutoSaveTimer();
+    this.autoSaveTimer = setTimeout(() => {
+      this.autoSave();
+    }, 10000); // 10 seconds
+  }
+
+  stopAutoSaveTimer() {
+    if (this.autoSaveTimer) {
+      clearTimeout(this.autoSaveTimer);
+      this.autoSaveTimer = null;
+    }
+  }
+
+  async autoSave() {
+    const content = this.contentTextarea.value.trim();
+    if (!content) return;
+
+    try {
+      await this.saveEntryInternal(false); // silent save
+    } catch (error) {
+      console.error('Autosave failed:', error);
+    }
+  }
+
+  async doneEditing() {
+    if (this.hasUnsavedChanges) {
+      await this.saveEntryInternal(true);
+    }
+    setTimeout(() => {
+      this.showCalendarView();
+    }, 500);
+  }
+
+  async saveEntryInternal(showToastMessage = true) {
     const title = this.titleInput.value.trim();
     const content = this.contentTextarea.value.trim();
 
     if (!content) {
-      showToast('Please write something before saving', 'info');
+      if (showToastMessage) {
+        showToast('Please write something before saving', 'info');
+      }
       return;
     }
 
@@ -341,37 +384,28 @@ class JournalApp {
 
       let savedEntry;
       if (this.currentEntry && this.currentEntry.id) {
-        // Update existing entry
         savedEntry = await API.updateEntry(this.currentEntry.id, entryData);
-        showToast('Entry updated successfully!', 'success');
+        if (showToastMessage) showToast('Entry saved!', 'success');
       } else {
-        // Check if one exists for this date first
         const existingEntry = this.entriesByDate[entryData.date]?.[0];
-
         if (existingEntry) {
-          // Update the existing entry for this date
           savedEntry = await API.updateEntry(existingEntry.id, entryData);
-          showToast('Entry updated successfully!', 'success');
+          if (showToastMessage) showToast('Entry saved!', 'success');
         } else {
-          // Create new entry
           savedEntry = await API.createEntry(entryData);
-          showToast('Entry saved successfully!', 'success');
+          if (showToastMessage) showToast('Entry saved!', 'success');
         }
       }
 
       this.currentEntry = savedEntry;
       this.hasUnsavedChanges = false;
-      this.closeSidebar();
-
-      // Reload entries and go back to calendar
       await this.loadEntries();
-      setTimeout(() => {
-        this.showCalendarView();
-      }, 500);
 
     } catch (error) {
       console.error('Error saving entry:', error);
-      showToast('Failed to save entry. Please try again.', 'error');
+      if (showToastMessage) {
+        showToast('Failed to save entry. Please try again.', 'error');
+      }
     }
   }
 
