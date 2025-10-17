@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Journal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/themes.css">
+  <style>
+    /* View switching */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    /* Calendar specific styles */
+    .calendar-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: var(--spacing-lg);
+      box-shadow: 0 4px 20px var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .calendar-header h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: var(--spacing-sm);
+      align-items: center;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--spacing-sm);
+    }
+
+    .calendar-day-header {
+      text-align: center;
+      font-weight: 600;
+      padding: var(--spacing-sm);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-xs);
+      background: var(--bg-tertiary);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+      position: relative;
+    }
+
+    .calendar-day:hover {
+      border-color: var(--accent-color);
+      transform: scale(1.05);
+    }
+
+    .calendar-day.has-entry {
+      background: linear-gradient(135deg, var(--accent-color-light), var(--bg-tertiary));
+      border-color: var(--accent-color);
+    }
+
+    .calendar-day.other-month {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .calendar-day.today {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px var(--shadow);
+    }
+
+    .calendar-day-number {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="theme-nebula-purple dark-mode">
+  <!-- Starfield Background -->
+  <div class="starfield"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" id="homeLink" class="logo" style="text-decoration: none; cursor: pointer;">✨ Cosmic Journal</a>
+      <div class="nav-links">
+        <a href="/settings" class="nav-link">Settings</a>
+      </div>
+      <div class="nav-controls">
+        <button id="themeToggle" class="icon-btn" title="Toggle dark/light mode">
+          <span class="icon">🌙</span>
+        </button>
+        <button id="searchBtn" class="icon-btn" title="Search entries">
+          <span class="icon">🔍</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container" style="display: block; padding: var(--spacing-lg);">
+
+    <!-- CALENDAR VIEW -->
+    <div id="calendarView" class="view active">
+      <div class="calendar-container">
+        <div class="calendar-header">
+          <h2 id="calendarTitle">October 2025</h2>
+          <div class="calendar-nav">
+            <button id="prevMonth" class="icon-btn">←</button>
+            <button id="todayBtn" class="btn btn-secondary">Today</button>
+            <button id="nextMonth" class="icon-btn">→</button>
+          </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- Calendar days will be generated here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR VIEW -->
+    <div id="editorView" class="view">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <div class="editor-container">
+          <div class="editor-header">
+            <input type="text" id="entryTitle" class="entry-title" placeholder="Entry title (optional)">
+            <div class="entry-meta">
+              <span id="entryDate" class="entry-date"></span>
+              <span id="modifiedDate" class="modified-date" style="display: none;"></span>
+              <span id="wordCount" class="word-count">0 words</span>
+            </div>
+          </div>
+
+          <textarea id="entryContent" class="entry-content" placeholder="Start writing your thoughts..."></textarea>
+
+          <div class="editor-actions">
+            <button id="enhanceBtn" class="btn btn-primary">✨ Enhance</button>
+            <button id="saveBtn" class="btn btn-secondary">💾 Save</button>
+            <button id="deleteBtn" class="btn btn-danger" style="display: none;">🗑️ Delete</button>
+            <div class="auto-save-indicator" id="autoSaveIndicator"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Questions Sidebar (hidden until enhance is clicked) -->
+  <aside class="questions-sidebar" id="questionsSidebar" style="display: none;">
+    <div class="questions-sidebar-header">
+      <h3 id="sidebarTitle">✨ Enhancing...</h3>
+      <button id="closeSidebar" class="icon-btn">✕</button>
+    </div>
+    <div class="questions-sidebar-content" id="sidebarContent">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Processing your entry...</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Search Modal -->
+  <div id="searchModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🔍 Search Entries</h2>
+        <button class="icon-btn" onclick="closeSearchModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search your entries...">
+        <div id="searchResults" class="search-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="loading-content">
+      <div class="spinner-large"></div>
+      <p id="loadingText">Processing...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="/js/api-client.js"></script>
+  <script src="/js/theme-manager.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
