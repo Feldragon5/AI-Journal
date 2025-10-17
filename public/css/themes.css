@@ -1,1 +1,322 @@
-/* AURORA THEMES */ .theme-aurora-purple.dark-mode { --bg-primary: #0a0515; --bg-secondary: rgba(15, 10, 25, 0.85); --bg-tertiary: rgba(25, 15, 40, 0.6); --text-primary: #e8e3f0; --text-secondary: #b8b3c0; --border-color: rgba(138, 101, 234, 0.2); --shadow: rgba(138, 101, 234, 0.3); --aurora-base-bg: linear-gradient(to bottom, #0a0515 0%, #1a0a2e 50%, #2d1654 100%); --aurora-color-1: rgba(138, 101, 234, 0.7); --aurora-color-2: rgba(196, 113, 237, 0.6); --aurora-color-3: rgba(255, 110, 199, 0.5); --aurora-color-4: rgba(180, 130, 251, 0.6); --accent-color: #8a65ea; --accent-color-light: rgba(138, 101, 234, 0.15); --accent-color-dark: #6a45ca; --gradient-primary: linear-gradient(135deg, #8a65ea 0%, #c471ed 50%, #ff6ec7 100%); } .theme-aurora-purple.light-mode { --bg-primary: #f8f6fc; --bg-secondary: rgba(255, 255, 255, 0.95); --bg-tertiary: rgba(245, 240, 255, 0.8); --text-primary: #2d1654; --text-secondary: #6a5a8a; --border-color: rgba(138, 101, 234, 0.2); --shadow: rgba(138, 101, 234, 0.15); --aurora-base-bg: linear-gradient(to bottom, #e8e3f5 0%, #f0ebff 50%, #f8f6fc 100%); --aurora-color-1: rgba(138, 101, 234, 0.25); --aurora-color-2: rgba(196, 113, 237, 0.2); --aurora-color-3: rgba(255, 110, 199, 0.15); --aurora-color-4: rgba(180, 130, 251, 0.2); --accent-color: #8a65ea; --accent-color-light: rgba(138, 101, 234, 0.1); --accent-color-dark: #6a45ca; --gradient-primary: linear-gradient(135deg, #8a65ea 0%, #c471ed 50%, #ff6ec7 100%); } .dark-mode .navbar, .dark-mode .editor-container, .dark-mode .questions-sidebar, .dark-mode .modal-content { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); } .dark-mode .btn-primary { box-shadow: 0 0 20px var(--shadow); } .dark-mode .btn-primary:hover { box-shadow: 0 0 30px var(--shadow); } .dark-mode .calendar-day.has-entry { box-shadow: 0 0 15px var(--shadow); } .light-mode .aurora-bg { opacity: 0.4; } .light-mode .aurora-bg::before, .light-mode .aurora-bg::after { opacity: 0.3; }
+/* ========================================
+   AURORA JOURNAL - THEME SYSTEM
+   6 Beautiful Aurora-Inspired Color Palettes
+   Each with Dark + Light Mode
+   ======================================== */
+
+/* ========================================
+   1. AURORA PURPLE (Default)
+   Colors: Purple, Magenta, Pink
+   ======================================== */
+
+.theme-aurora-purple.dark-mode {
+  --bg-primary: #0a0515;
+  --bg-secondary: rgba(15, 10, 25, 0.85);
+  --bg-tertiary: rgba(25, 15, 40, 0.6);
+  --text-primary: #e8e3f0;
+  --text-secondary: #b8b3c0;
+  --border-color: rgba(138, 101, 234, 0.2);
+  --shadow: rgba(138, 101, 234, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #0a0515 0%, #1a0a2e 50%, #2d1654 100%);
+  --aurora-color-1: rgba(138, 101, 234, 0.7);  /* Purple */
+  --aurora-color-2: rgba(196, 113, 237, 0.6);  /* Magenta */
+  --aurora-color-3: rgba(255, 110, 199, 0.5);  /* Pink */
+  --aurora-color-4: rgba(180, 130, 251, 0.6);  /* Light purple */
+
+  --accent-color: #8a65ea;
+  --accent-color-light: rgba(138, 101, 234, 0.15);
+  --accent-color-dark: #6a45ca;
+  --gradient-primary: linear-gradient(135deg, #8a65ea 0%, #c471ed 50%, #ff6ec7 100%);
+}
+
+.theme-aurora-purple.light-mode {
+  --bg-primary: #f8f6fc;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(245, 240, 255, 0.8);
+  --text-primary: #2d1654;
+  --text-secondary: #6a5a8a;
+  --border-color: rgba(138, 101, 234, 0.2);
+  --shadow: rgba(138, 101, 234, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #e8e3f5 0%, #f0ebff 50%, #f8f6fc 100%);
+  --aurora-color-1: rgba(138, 101, 234, 0.25);
+  --aurora-color-2: rgba(196, 113, 237, 0.2);
+  --aurora-color-3: rgba(255, 110, 199, 0.15);
+  --aurora-color-4: rgba(180, 130, 251, 0.2);
+
+  --accent-color: #8a65ea;
+  --accent-color-light: rgba(138, 101, 234, 0.1);
+  --accent-color-dark: #6a45ca;
+  --gradient-primary: linear-gradient(135deg, #8a65ea 0%, #c471ed 50%, #ff6ec7 100%);
+}
+
+/* ========================================
+   2. AURORA GREEN (Northern Lights)
+   Colors: Green, Teal, Turquoise
+   ======================================== */
+
+.theme-aurora-green.dark-mode {
+  --bg-primary: #050a0f;
+  --bg-secondary: rgba(10, 20, 25, 0.85);
+  --bg-tertiary: rgba(15, 30, 40, 0.6);
+  --text-primary: #e3f0e8;
+  --text-secondary: #b3c0b8;
+  --border-color: rgba(101, 234, 138, 0.2);
+  --shadow: rgba(101, 234, 138, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #050a0f 0%, #0a1e1a 50%, #16542d 100%);
+  --aurora-color-1: rgba(101, 234, 138, 0.7);  /* Green */
+  --aurora-color-2: rgba(113, 237, 196, 0.6);  /* Teal */
+  --aurora-color-3: rgba(110, 255, 199, 0.5);  /* Turquoise */
+  --aurora-color-4: rgba(130, 251, 180, 0.6);  /* Light green */
+
+  --accent-color: #65ea8a;
+  --accent-color-light: rgba(101, 234, 138, 0.15);
+  --accent-color-dark: #45ca6a;
+  --gradient-primary: linear-gradient(135deg, #65ea8a 0%, #71edc4 50%, #6effc7 100%);
+}
+
+.theme-aurora-green.light-mode {
+  --bg-primary: #f6fcf8;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(240, 255, 245, 0.8);
+  --text-primary: #16542d;
+  --text-secondary: #5a8a6a;
+  --border-color: rgba(101, 234, 138, 0.2);
+  --shadow: rgba(101, 234, 138, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #e3f5e8 0%, #ebfff0 50%, #f6fcf8 100%);
+  --aurora-color-1: rgba(101, 234, 138, 0.25);
+  --aurora-color-2: rgba(113, 237, 196, 0.2);
+  --aurora-color-3: rgba(110, 255, 199, 0.15);
+  --aurora-color-4: rgba(130, 251, 180, 0.2);
+
+  --accent-color: #65ea8a;
+  --accent-color-light: rgba(101, 234, 138, 0.1);
+  --accent-color-dark: #45ca6a;
+  --gradient-primary: linear-gradient(135deg, #65ea8a 0%, #71edc4 50%, #6effc7 100%);
+}
+
+/* ========================================
+   3. AURORA BLUE (Ice Aurora)
+   Colors: Blue, Cyan, Ice Blue
+   ======================================== */
+
+.theme-aurora-blue.dark-mode {
+  --bg-primary: #050a15;
+  --bg-secondary: rgba(10, 15, 25, 0.85);
+  --bg-tertiary: rgba(15, 25, 40, 0.6);
+  --text-primary: #e3e8f0;
+  --text-secondary: #b3b8c0;
+  --border-color: rgba(101, 170, 234, 0.2);
+  --shadow: rgba(101, 170, 234, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #050a15 0%, #0a1a2e 50%, #162d54 100%);
+  --aurora-color-1: rgba(101, 170, 234, 0.7);  /* Blue */
+  --aurora-color-2: rgba(113, 196, 237, 0.6);  /* Cyan */
+  --aurora-color-3: rgba(110, 199, 255, 0.5);  /* Ice Blue */
+  --aurora-color-4: rgba(130, 180, 251, 0.6);  /* Light blue */
+
+  --accent-color: #65aaea;
+  --accent-color-light: rgba(101, 170, 234, 0.15);
+  --accent-color-dark: #458aca;
+  --gradient-primary: linear-gradient(135deg, #65aaea 0%, #71c4ed 50%, #6ec7ff 100%);
+}
+
+.theme-aurora-blue.light-mode {
+  --bg-primary: #f6f8fc;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(240, 245, 255, 0.8);
+  --text-primary: #162d54;
+  --text-secondary: #5a6a8a;
+  --border-color: rgba(101, 170, 234, 0.2);
+  --shadow: rgba(101, 170, 234, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #e3e8f5 0%, #ebf0ff 50%, #f6f8fc 100%);
+  --aurora-color-1: rgba(101, 170, 234, 0.25);
+  --aurora-color-2: rgba(113, 196, 237, 0.2);
+  --aurora-color-3: rgba(110, 199, 255, 0.15);
+  --aurora-color-4: rgba(130, 180, 251, 0.2);
+
+  --accent-color: #65aaea;
+  --accent-color-light: rgba(101, 170, 234, 0.1);
+  --accent-color-dark: #458aca;
+  --gradient-primary: linear-gradient(135deg, #65aaea 0%, #71c4ed 50%, #6ec7ff 100%);
+}
+
+/* ========================================
+   4. AURORA ROSE (Pink Aurora)
+   Colors: Rose, Pink, Hot Pink
+   ======================================== */
+
+.theme-aurora-rose.dark-mode {
+  --bg-primary: #150a0f;
+  --bg-secondary: rgba(25, 10, 15, 0.85);
+  --bg-tertiary: rgba(40, 15, 25, 0.6);
+  --text-primary: #f0e3e8;
+  --text-secondary: #c0b3b8;
+  --border-color: rgba(234, 101, 138, 0.2);
+  --shadow: rgba(234, 101, 138, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #150a0f 0%, #2e0a1a 50%, #54162d 100%);
+  --aurora-color-1: rgba(234, 101, 138, 0.7);  /* Rose */
+  --aurora-color-2: rgba(237, 113, 196, 0.6);  /* Pink */
+  --aurora-color-3: rgba(255, 110, 199, 0.5);  /* Hot Pink */
+  --aurora-color-4: rgba(251, 130, 180, 0.6);  /* Light rose */
+
+  --accent-color: #ea658a;
+  --accent-color-light: rgba(234, 101, 138, 0.15);
+  --accent-color-dark: #ca456a;
+  --gradient-primary: linear-gradient(135deg, #ea658a 0%, #ed71c4 50%, #ff6ec7 100%);
+}
+
+.theme-aurora-rose.light-mode {
+  --bg-primary: #fcf6f8;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(255, 240, 245, 0.8);
+  --text-primary: #54162d;
+  --text-secondary: #8a5a6a;
+  --border-color: rgba(234, 101, 138, 0.2);
+  --shadow: rgba(234, 101, 138, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #f5e3e8 0%, #ffebf0 50%, #fcf6f8 100%);
+  --aurora-color-1: rgba(234, 101, 138, 0.25);
+  --aurora-color-2: rgba(237, 113, 196, 0.2);
+  --aurora-color-3: rgba(255, 110, 199, 0.15);
+  --aurora-color-4: rgba(251, 130, 180, 0.2);
+
+  --accent-color: #ea658a;
+  --accent-color-light: rgba(234, 101, 138, 0.1);
+  --accent-color-dark: #ca456a;
+  --gradient-primary: linear-gradient(135deg, #ea658a 0%, #ed71c4 50%, #ff6ec7 100%);
+}
+
+/* ========================================
+   5. AURORA GOLD (Warm Aurora)
+   Colors: Gold, Amber, Orange
+   ======================================== */
+
+.theme-aurora-gold.dark-mode {
+  --bg-primary: #0f0a05;
+  --bg-secondary: rgba(25, 20, 10, 0.85);
+  --bg-tertiary: rgba(40, 30, 15, 0.6);
+  --text-primary: #f0e8e3;
+  --text-secondary: #c0b8b3;
+  --border-color: rgba(234, 170, 101, 0.2);
+  --shadow: rgba(234, 170, 101, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #0f0a05 0%, #2e1e0a 50%, #542d16 100%);
+  --aurora-color-1: rgba(234, 170, 101, 0.7);  /* Gold */
+  --aurora-color-2: rgba(237, 196, 113, 0.6);  /* Amber */
+  --aurora-color-3: rgba(255, 184, 110, 0.5);  /* Orange */
+  --aurora-color-4: rgba(251, 180, 130, 0.6);  /* Light gold */
+
+  --accent-color: #eaaa65;
+  --accent-color-light: rgba(234, 170, 101, 0.15);
+  --accent-color-dark: #ca8a45;
+  --gradient-primary: linear-gradient(135deg, #eaaa65 0%, #edc471 50%, #ffb86e 100%);
+}
+
+.theme-aurora-gold.light-mode {
+  --bg-primary: #fcf8f6;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(255, 245, 240, 0.8);
+  --text-primary: #542d16;
+  --text-secondary: #8a6a5a;
+  --border-color: rgba(234, 170, 101, 0.2);
+  --shadow: rgba(234, 170, 101, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #f5e8e3 0%, #fff0eb 50%, #fcf8f6 100%);
+  --aurora-color-1: rgba(234, 170, 101, 0.25);
+  --aurora-color-2: rgba(237, 196, 113, 0.2);
+  --aurora-color-3: rgba(255, 184, 110, 0.15);
+  --aurora-color-4: rgba(251, 180, 130, 0.2);
+
+  --accent-color: #eaaa65;
+  --accent-color-light: rgba(234, 170, 101, 0.1);
+  --accent-color-dark: #ca8a45;
+  --gradient-primary: linear-gradient(135deg, #eaaa65 0%, #edc471 50%, #ffb86e 100%);
+}
+
+/* ========================================
+   6. AURORA TEAL (Tropical Aurora)
+   Colors: Teal, Aqua, Mint
+   ======================================== */
+
+.theme-aurora-teal.dark-mode {
+  --bg-primary: #050f0f;
+  --bg-secondary: rgba(10, 25, 25, 0.85);
+  --bg-tertiary: rgba(15, 40, 40, 0.6);
+  --text-primary: #e3f0f0;
+  --text-secondary: #b3c0c0;
+  --border-color: rgba(101, 234, 228, 0.2);
+  --shadow: rgba(101, 234, 228, 0.3);
+
+  --aurora-base-bg: linear-gradient(to bottom, #050f0f 0%, #0a2e2e 50%, #165454 100%);
+  --aurora-color-1: rgba(101, 234, 228, 0.7);  /* Teal */
+  --aurora-color-2: rgba(113, 237, 232, 0.6);  /* Aqua */
+  --aurora-color-3: rgba(110, 255, 245, 0.5);  /* Mint */
+  --aurora-color-4: rgba(130, 251, 251, 0.6);  /* Light teal */
+
+  --accent-color: #65eae4;
+  --accent-color-light: rgba(101, 234, 228, 0.15);
+  --accent-color-dark: #45cac4;
+  --gradient-primary: linear-gradient(135deg, #65eae4 0%, #71ede8 50%, #6efff5 100%);
+}
+
+.theme-aurora-teal.light-mode {
+  --bg-primary: #f6fcfc;
+  --bg-secondary: rgba(255, 255, 255, 0.95);
+  --bg-tertiary: rgba(240, 255, 255, 0.8);
+  --text-primary: #165454;
+  --text-secondary: #5a8a8a;
+  --border-color: rgba(101, 234, 228, 0.2);
+  --shadow: rgba(101, 234, 228, 0.15);
+
+  --aurora-base-bg: linear-gradient(to bottom, #e3f5f5 0%, #ebffff 50%, #f6fcfc 100%);
+  --aurora-color-1: rgba(101, 234, 228, 0.25);
+  --aurora-color-2: rgba(113, 237, 232, 0.2);
+  --aurora-color-3: rgba(110, 255, 245, 0.15);
+  --aurora-color-4: rgba(130, 251, 251, 0.2);
+
+  --accent-color: #65eae4;
+  --accent-color-light: rgba(101, 234, 228, 0.1);
+  --accent-color-dark: #45cac4;
+  --gradient-primary: linear-gradient(135deg, #65eae4 0%, #71ede8 50%, #6efff5 100%);
+}
+
+/* ========================================
+   THEME EFFECTS (Apply to all themes)
+   ======================================== */
+
+/* Dark Mode Enhancements */
+.dark-mode .navbar,
+.dark-mode .editor-container,
+.dark-mode .questions-sidebar,
+.dark-mode .modal-content {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.dark-mode .btn-primary {
+  box-shadow: 0 0 20px var(--shadow);
+}
+
+.dark-mode .btn-primary:hover {
+  box-shadow: 0 0 30px var(--shadow);
+}
+
+.dark-mode .calendar-day.has-entry {
+  box-shadow: 0 0 15px var(--shadow);
+}
+
+/* Light Mode Adjustments */
+.light-mode .aurora-bg {
+  opacity: 0.4;
+}
+
+.light-mode .aurora-bg::before,
+.light-mode .aurora-bg::after {
+  opacity: 0.3;
+}
