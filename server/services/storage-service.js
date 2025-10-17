@@ -4,6 +4,7 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '../data');
 const ENTRIES_FILE = path.join(DATA_DIR, 'entries.json');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
+const PROMPTS_FILE = path.join(DATA_DIR, 'prompts.json');
 
 class StorageService {
   constructor() {
@@ -26,11 +27,10 @@ class StorageService {
         await fs.access(SETTINGS_FILE);
       } catch {
         const defaultSettings = {
-          customInstructions: '',
           writingStyle: 'natural',
           questionFrequency: 'always',
           autoEnhance: false,
-          theme: 'nebula-purple',
+          theme: 'aurora-purple',
           darkMode: true
         };
         await fs.writeFile(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
@@ -125,7 +125,13 @@ class StorageService {
   async getSettings() {
     try {
       const data = await fs.readFile(SETTINGS_FILE, 'utf8');
-      return JSON.parse(data);
+      const settings = JSON.parse(data);
+
+      // Get customInstructions from prompts.json
+      const prompts = await this.getPrompts();
+      settings.customInstructions = prompts.customInstructions || '';
+
+      return settings;
     } catch (error) {
       console.error('Error reading settings:', error);
       return {};
@@ -134,9 +140,40 @@ class StorageService {
 
   async updateSettings(settings) {
     const currentSettings = await this.getSettings();
+
+    // If customInstructions is being updated, save to prompts.json
+    if (settings.customInstructions !== undefined) {
+      await this.updatePrompts({ customInstructions: settings.customInstructions });
+      delete settings.customInstructions; // Remove from settings object
+    }
+
     const updatedSettings = { ...currentSettings, ...settings };
     await fs.writeFile(SETTINGS_FILE, JSON.stringify(updatedSettings, null, 2));
+
+    // Add back customInstructions for return value
+    const prompts = await this.getPrompts();
+    updatedSettings.customInstructions = prompts.customInstructions || '';
+
     return updatedSettings;
+  }
+
+  async getPrompts() {
+    try {
+      const data = await fs.readFile(PROMPTS_FILE, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error reading prompts:', error);
+      return { customInstructions: '' };
+    }
+  }
+
+  async updatePrompts(updates) {
+    const currentPrompts = await this.getPrompts();
+    const updatedPrompts = { ...currentPrompts, ...updates };
+    await fs.writeFile(PROMPTS_FILE, JSON.stringify(updatedPrompts, null, 2));
+
+    // Reload prompts in gemini service (if needed in future)
+    return updatedPrompts;
   }
 
   generateId() {

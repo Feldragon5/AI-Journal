@@ -35,9 +35,10 @@ class GeminiService {
     };
   }
 
-  async generateQuestions(entryExcerpt, customInstructions = '') {
+  async generateQuestions(entryExcerpt) {
     // Build prompt from configuration
     const config = this.prompts.questionGeneration;
+    const customInstructions = this.prompts.customInstructions || '';
     const prompt = config.template
       .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
       .replace('{entryExcerpt}', entryExcerpt);
@@ -82,9 +83,10 @@ class GeminiService {
     }
   }
 
-  async enhanceEntry(content, customInstructions = '') {
+  async enhanceEntry(content) {
     // Build prompt from configuration
     const config = this.prompts.entryEnhancement;
+    const customInstructions = this.prompts.customInstructions || '';
     const prompt = config.template
       .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
       .replace('{content}', content);

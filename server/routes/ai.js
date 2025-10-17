@@ -14,11 +14,7 @@ router.post('/questions', async (req, res) => {
       return res.status(400).json({ error: 'Entry excerpt too short' });
     }
 
-    // Get custom instructions from settings
-    const settings = await storageService.getSettings();
-    const customInstructions = settings.customInstructions || '';
-
-    const questions = await geminiService.generateQuestions(excerpt, customInstructions);
+    const questions = await geminiService.generateQuestions(excerpt);
     res.json({ questions });
   } catch (error) {
     console.error('AI questions error:', error);
@@ -35,11 +31,7 @@ router.post('/enhance', async (req, res) => {
       return res.status(400).json({ error: 'Content too short to enhance' });
     }
 
-    // Get custom instructions from settings
-    const settings = await storageService.getSettings();
-    const customInstructions = settings.customInstructions || '';
-
-    const enhancedContent = await geminiService.enhanceEntry(content, customInstructions);
+    const enhancedContent = await geminiService.enhanceEntry(content);
     res.json({ enhancedContent });
   } catch (error) {
     console.error('AI enhance error:', error);
