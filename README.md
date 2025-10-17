@@ -1,4 +1,4 @@
-# 🌌 Aurora Journal - AI-Powered Journaling App
+# ⭐ Aurora Journal - AI-Powered Journaling App
 
 A beautiful, AI-enhanced journaling application with stunning aurora borealis-inspired themes. Write your thoughts, reflect with AI-powered questions, and watch your entries come to life against animated aurora backgrounds.
 
@@ -65,7 +65,7 @@ npm start
 
 You should see:
 ```
-🌌 AI Journal Server running on http://localhost:3000
+⭐ AI Journal Server running on http://localhost:3000
 📝 Ready to capture your thoughts...
 ```
 
@@ -151,7 +151,7 @@ When you click "Enhance":
 - `Ctrl + S` or `Cmd + S` - Save entry
 - `Ctrl + E` or `Cmd + E` - Enhance with AI
 - `Ctrl + /` or `Cmd + /` - Open search
-- Click the logo (🌌 Aurora Journal) - Return to calendar
+- Click the logo (⭐ Aurora Journal) - Return to calendar
 
 ## 🌟 Features Overview
 
@@ -324,7 +324,7 @@ Free for personal use. Modify and customize as you wish!
 
 ---
 
-**✨ May your journaling journey be as beautiful as the northern lights!** 🌌
+**✨ May your journaling journey be as beautiful as the northern lights!** ⭐
 
 **Questions or Issues?** Check the troubleshooting section above or review the code comments.
 

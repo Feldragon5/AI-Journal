@@ -452,7 +452,7 @@ The app is fully functional and ready for personal use! All core features are wo
 
 **From "Cosmic Journal" to "Aurora Journal"**
 - New name reflects the beautiful aurora borealis-inspired aesthetic
-- Logo updated: 🌌 Aurora Journal
+- Logo updated: ⭐ Aurora Journal
 - All documentation, code, and UI updated with new branding
 
 ### Aurora Background System ✅
