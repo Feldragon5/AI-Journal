@@ -5,7 +5,14 @@ class App {
     this.entries = [];
     this.entriesList = document.getElementById('entriesList');
     this.newEntryBtn = document.getElementById('newEntryBtn');
-    this.searchBtn = document.getElementById('searchBtn');
+
+    // New dropdown search elements
+    this.searchBar = document.getElementById('searchBar');
+    this.searchDropdown = document.getElementById('searchDropdown');
+    this.searchDropdownInput = document.getElementById('searchDropdownInput');
+    this.searchDropdownResults = document.getElementById('searchDropdownResults');
+
+    // Old modal elements (keep for backward compatibility)
     this.searchModal = document.getElementById('searchModal');
     this.searchInput = document.getElementById('searchInput');
     this.searchResults = document.getElementById('searchResults');
@@ -28,14 +35,26 @@ class App {
       });
     }
 
-    // Search button
-    if (this.searchBtn) {
-      this.searchBtn.addEventListener('click', () => {
-        this.openSearchModal();
+    // Dropdown search bar - click to open
+    if (this.searchBar) {
+      this.searchBar.addEventListener('click', () => {
+        this.toggleSearchDropdown();
       });
     }
 
-    // Search input
+    // Dropdown search input
+    if (this.searchDropdownInput) {
+      this.searchDropdownInput.addEventListener('input', (e) => {
+        this.performDropdownSearch(e.target.value);
+      });
+
+      // Prevent closing when typing in input
+      this.searchDropdownInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    // Old search input (for backward compatibility)
     if (this.searchInput) {
       this.searchInput.addEventListener('input', (e) => {
         this.performSearch(e.target.value);
@@ -51,11 +70,20 @@ class App {
       });
     }
 
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (this.searchDropdown &&
+          !this.searchBar.contains(e.target) &&
+          !this.searchDropdown.contains(e.target)) {
+        this.closeSearchDropdown();
+      }
+    });
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === '/') {
         e.preventDefault();
-        this.openSearchModal();
+        this.toggleSearchDropdown();
       }
       if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
         e.preventDefault();
@@ -63,8 +91,13 @@ class App {
           editor.newEntry();
         }
       }
-      if (e.key === 'Escape' && this.searchModal.classList.contains('active')) {
-        this.closeSearchModal();
+      if (e.key === 'Escape') {
+        if (this.searchDropdown && this.searchDropdown.classList.contains('active')) {
+          this.closeSearchDropdown();
+        }
+        if (this.searchModal && this.searchModal.classList.contains('active')) {
+          this.closeSearchModal();
+        }
       }
     });
   }
@@ -137,6 +170,43 @@ class App {
     });
   }
 
+  toggleSearchDropdown() {
+    if (!this.searchDropdown) return;
+
+    if (this.searchDropdown.classList.contains('active')) {
+      this.closeSearchDropdown();
+    } else {
+      this.openSearchDropdown();
+    }
+  }
+
+  openSearchDropdown() {
+    if (!this.searchDropdown) return;
+
+    this.searchDropdown.classList.add('active');
+    this.searchBar.classList.add('active');
+
+    if (this.searchDropdownInput) {
+      setTimeout(() => {
+        this.searchDropdownInput.focus();
+      }, 100);
+      this.searchDropdownInput.value = '';
+    }
+
+    this.searchDropdownResults.innerHTML = '<p class="search-no-results">Start typing to search...</p>';
+  }
+
+  closeSearchDropdown() {
+    if (!this.searchDropdown) return;
+
+    this.searchDropdown.classList.remove('active');
+    this.searchBar.classList.remove('active');
+
+    if (this.searchDropdownInput) {
+      this.searchDropdownInput.value = '';
+    }
+  }
+
   openSearchModal() {
     if (this.searchModal) {
       this.searchModal.classList.add('active');
@@ -201,6 +271,60 @@ class App {
     } catch (error) {
       console.error('Search error:', error);
       this.searchResults.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Search failed. Please try again.</p>';
+    }
+  }
+
+  async performDropdownSearch(query) {
+    if (!query || query.trim().length < 2) {
+      this.searchDropdownResults.innerHTML = '<p class="search-no-results">Start typing to search...</p>';
+      return;
+    }
+
+    try {
+      const results = await API.searchEntries(query.trim());
+
+      if (results.length === 0) {
+        this.searchDropdownResults.innerHTML = '<p class="search-no-results">No entries found.</p>';
+        return;
+      }
+
+      this.searchDropdownResults.innerHTML = '';
+
+      results.forEach(entry => {
+        const resultEl = document.createElement('div');
+        resultEl.className = 'search-result-item';
+
+        const title = entry.title || entry.displayTitle || 'Untitled';
+        const preview = entry.content.substring(0, 100) + (entry.content.length > 100 ? '...' : '');
+        const date = new Date(entry.createdAt).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+
+        resultEl.innerHTML = `
+          <div class="search-result-title">${this.escapeHtml(title)}</div>
+          <div class="search-result-date">${date}</div>
+          <div class="search-result-preview">${this.escapeHtml(preview)}</div>
+        `;
+
+        resultEl.addEventListener('click', () => {
+          // Use main.js if available, otherwise use editor
+          if (window.mainApp) {
+            window.mainApp.loadEntryByDate(entry.date);
+            this.closeSearchDropdown();
+          } else if (editor) {
+            editor.loadEntry(entry);
+            this.closeSearchDropdown();
+            this.renderEntries(); // Update sidebar
+          }
+        });
+
+        this.searchDropdownResults.appendChild(resultEl);
+      });
+    } catch (error) {
+      console.error('Search error:', error);
+      this.searchDropdownResults.innerHTML = '<p class="search-no-results">Search failed. Please try again.</p>';
     }
   }
 
