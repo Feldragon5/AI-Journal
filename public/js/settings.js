@@ -214,7 +214,7 @@ class Settings {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `cosmic-journal-backup-${this.formatDateKey(new Date())}.json`;
+      a.download = `aurora-journal-backup-${this.formatDateKey(new Date())}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -230,7 +230,7 @@ class Settings {
   async exportAsText() {
     try {
       let text = '='.repeat(60) + '\n';
-      text += 'COSMIC JOURNAL EXPORT\n';
+      text += 'AURORA JOURNAL EXPORT\n';
       text += '='.repeat(60) + '\n\n';
 
       this.entries.forEach(entry => {
@@ -254,7 +254,7 @@ class Settings {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `cosmic-journal-export-${this.formatDateKey(new Date())}.txt`;
+      a.download = `aurora-journal-export-${this.formatDateKey(new Date())}.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

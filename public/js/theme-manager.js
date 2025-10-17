@@ -2,7 +2,7 @@
 
 class ThemeManager {
   constructor() {
-    this.currentTheme = localStorage.getItem('theme') || 'nebula-purple';
+    this.currentTheme = localStorage.getItem('theme') || 'aurora-purple';
     this.isDarkMode = localStorage.getItem('darkMode') !== 'false'; // default to dark
     this.init();
   }
@@ -17,11 +17,12 @@ class ThemeManager {
 
     // Remove all theme classes
     body.classList.remove(
-      'theme-nebula-purple',
-      'theme-starlight-blue',
-      'theme-galaxy-gold',
+      'theme-aurora-purple',
       'theme-aurora-green',
-      'theme-cosmic-rose',
+      'theme-aurora-blue',
+      'theme-aurora-rose',
+      'theme-aurora-gold',
+      'theme-aurora-teal',
       'dark-mode',
       'light-mode'
     );
