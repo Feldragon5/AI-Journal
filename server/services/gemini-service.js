@@ -1,23 +1,52 @@
 const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 class GeminiService {
   constructor(apiKey) {
     this.apiKey = apiKey;
     this.baseUrl = 'generativelanguage.googleapis.com';
     this.model = 'gemini-2.0-flash-exp';
+
+    // Load prompts configuration
+    this.loadPrompts();
+  }
+
+  loadPrompts() {
+    try {
+      const promptsPath = path.join(__dirname, '../config/prompts.json');
+      const promptsData = fs.readFileSync(promptsPath, 'utf8');
+      this.prompts = JSON.parse(promptsData);
+    } catch (error) {
+      console.error('Error loading prompts configuration:', error);
+      // Fallback to default prompts if config file can't be loaded
+      this.prompts = this.getDefaultPrompts();
+    }
+  }
+
+  getDefaultPrompts() {
+    // Fallback prompts in case config file is missing
+    return {
+      questionGeneration: {
+        fallbackQuestions: [
+          "How did that make you feel?",
+          "What details stand out to you about that moment?"
+        ]
+      }
+    };
   }
 
   async generateQuestions(entryExcerpt, customInstructions = '') {
-    const prompt = `${customInstructions ? customInstructions + '\n\n' : ''}Based on this journal entry excerpt, generate 2-3 thoughtful, empathetic questions to help the writer reflect deeper or add more detail. Focus on emotions, details, and thoughts. The questions should feel natural and conversational. Return ONLY a valid JSON array of question strings, nothing else.
-
-Entry excerpt: "${entryExcerpt}"
-
-Example format: ["How did that make you feel?", "What specific details stand out to you about that moment?"]`;
+    // Build prompt from configuration
+    const config = this.prompts.questionGeneration;
+    const prompt = config.template
+      .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
+      .replace('{entryExcerpt}', entryExcerpt);
 
     try {
       const response = await this.makeRequest(prompt, {
-        temperature: 0.7,
-        maxOutputTokens: 200
+        temperature: config.temperature,
+        maxOutputTokens: config.maxOutputTokens
       });
 
       // Try to parse the response as JSON
@@ -43,8 +72,8 @@ Example format: ["How did that make you feel?", "What specific details stand out
         }
       }
 
-      // Fallback questions
-      return [
+      // Fallback questions from config
+      return this.prompts.questionGeneration.fallbackQuestions || [
         "How did that make you feel?",
         "What details stand out to you about that moment?"
       ];
@@ -55,14 +84,16 @@ Example format: ["How did that make you feel?", "What specific details stand out
   }
 
   async enhanceEntry(content, customInstructions = '') {
-    const prompt = `${customInstructions ? customInstructions + '\n\n' : ''}Rewrite this journal entry to be more coherent, well-structured, and polished while maintaining the author's authentic voice, tone, emotional content, and all important details. Do not change the meaning or add information that wasn't there. Keep the same perspective (first person) and tense. Return ONLY the enhanced entry text, nothing else.
-
-Original entry: "${content}"`;
+    // Build prompt from configuration
+    const config = this.prompts.entryEnhancement;
+    const prompt = config.template
+      .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
+      .replace('{content}', content);
 
     try {
       const response = await this.makeRequest(prompt, {
-        temperature: 0.5,
-        maxOutputTokens: 2048
+        temperature: config.temperature,
+        maxOutputTokens: config.maxOutputTokens
       });
 
       return response.trim();

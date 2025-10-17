@@ -1,0 +1,83 @@
+{
+  "questionGeneration": {
+    "systemPrompt": "You are a thoughtful journaling companion that helps users reflect deeper on their experiences.",
+    "template": "{customInstructions}\n\nBased on this journal entry excerpt, generate 2-3 thoughtful, empathetic questions to help the writer reflect deeper or add more detail. Focus on emotions, details, and thoughts. The questions should feel natural and conversational. Return ONLY a valid JSON array of question strings, nothing else.\n\nEntry excerpt: \"{entryExcerpt}\"\n\nExample format: [\"How did that make you feel?\", \"What specific details stand out to you about that moment?\"]",
+    "temperature": 0.7,
+    "maxOutputTokens": 200,
+    "fallbackQuestions": [
+      "How did that make you feel?",
+      "What details stand out to you about that moment?",
+      "What were you thinking when that happened?"
+    ],
+    "description": "Generates contextual questions to help users reflect deeper on their journal entries"
+  },
+  "entryEnhancement": {
+    "systemPrompt": "You are a skilled editor that enhances journal entries while preserving the author's authentic voice and meaning.",
+    "template": "{customInstructions}\n\nRewrite this journal entry to be more coherent, well-structured, and polished while maintaining the author's authentic voice, tone, emotional content, and all important details. Do not change the meaning or add information that wasn't there. Keep the same perspective (first person) and tense. Return ONLY the enhanced entry text, nothing else.\n\nOriginal entry: \"{content}\"",
+    "temperature": 0.5,
+    "maxOutputTokens": 2048,
+    "description": "Enhances journal entries for coherence and readability while preserving authenticity"
+  },
+  "questionAnswering": {
+    "systemPrompt": "You are a compassionate journaling assistant that helps users integrate their reflections into their journal entries.",
+    "template": "{customInstructions}\n\nThe user has answered a reflection question about their journal entry. Integrate their answer naturally into the existing entry. Maintain their voice and perspective.\n\nOriginal entry: \"{originalEntry}\"\n\nQuestion asked: \"{question}\"\n\nUser's answer: \"{answer}\"\n\nReturn ONLY the updated entry with the answer integrated naturally, nothing else.",
+    "temperature": 0.6,
+    "maxOutputTokens": 2048,
+    "description": "Integrates user answers to reflection questions into the journal entry"
+  },
+  "entrySummarization": {
+    "systemPrompt": "You are a concise summarizer that creates brief, meaningful summaries of journal entries.",
+    "template": "{customInstructions}\n\nCreate a brief 1-2 sentence summary of this journal entry that captures its essence.\n\nEntry: \"{content}\"\n\nReturn ONLY the summary, nothing else.",
+    "temperature": 0.5,
+    "maxOutputTokens": 150,
+    "description": "Creates brief summaries of journal entries (future feature)"
+  },
+  "moodDetection": {
+    "systemPrompt": "You are an empathetic mood analyzer that detects emotional tones in journal entries.",
+    "template": "{customInstructions}\n\nAnalyze the overall mood/emotional tone of this journal entry. Return a single word describing the primary mood (e.g., happy, sad, anxious, peaceful, excited, frustrated, reflective, grateful).\n\nEntry: \"{content}\"\n\nReturn ONLY ONE WORD for the mood, nothing else.",
+    "temperature": 0.3,
+    "maxOutputTokens": 20,
+    "description": "Detects the emotional mood of a journal entry (future feature)"
+  },
+  "writingPrompts": {
+    "systemPrompt": "You are a creative writing coach that generates inspiring journal prompts.",
+    "template": "{customInstructions}\n\nGenerate 3 thoughtful, creative journal writing prompts. Make them diverse - one introspective, one gratitude-focused, and one future-oriented. Return ONLY a valid JSON array of prompt strings.\n\nExample format: [\"What moment today made you pause and appreciate life?\", \"Describe a challenge you overcame recently.\", \"What would your ideal day look like one year from now?\"]",
+    "temperature": 0.8,
+    "maxOutputTokens": 300,
+    "description": "Generates creative writing prompts to inspire journaling (future feature)"
+  },
+  "weeklyInsights": {
+    "systemPrompt": "You are a reflective analyst that identifies patterns and themes in journal entries.",
+    "template": "{customInstructions}\n\nAnalyze these journal entries from the past week and provide 2-3 key insights or patterns you notice about the writer's experiences, thoughts, or emotions. Be encouraging and constructive.\n\nEntries from this week:\n{weekEntries}\n\nReturn insights in a friendly, conversational paragraph.",
+    "temperature": 0.6,
+    "maxOutputTokens": 500,
+    "description": "Analyzes weekly journal entries to provide insights and patterns (future feature)"
+  },
+  "settings": {
+    "customInstructionsPlaceholder": "e.g., 'Always maintain a poetic style' or 'Focus on emotional depth and gratitude'",
+    "maxCustomInstructionsLength": 1000,
+    "writingStyles": {
+      "natural": "Write in a natural, authentic voice",
+      "formal": "Use a more formal and structured writing style",
+      "casual": "Keep the tone casual and conversational",
+      "poetic": "Use poetic language and metaphors",
+      "concise": "Be brief and to the point, avoiding unnecessary details"
+    },
+    "questionFrequency": {
+      "always": "Generate questions after every pause in writing",
+      "sometimes": "Generate questions occasionally, when appropriate",
+      "never": "Do not generate reflection questions"
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2025-10-17",
+    "model": "gemini-2.0-flash-exp",
+    "notes": [
+      "All prompts use {placeholders} for dynamic content",
+      "customInstructions is optional and prepended to all prompts when provided",
+      "Temperature ranges: 0.3 (focused) to 0.8 (creative)",
+      "Edit these prompts to customize AI behavior throughout the app"
+    ]
+  }
+}
