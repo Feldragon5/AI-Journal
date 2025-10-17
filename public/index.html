@@ -16,8 +16,8 @@
     <div class="nav-content">
       <h1 class="logo">✨ Cosmic Journal</h1>
       <div class="nav-links">
-        <a href="/" class="nav-link active">Write</a>
-        <a href="/calendar" class="nav-link">Calendar</a>
+        <a href="/" class="nav-link">Calendar</a>
+        <a href="/editor" class="nav-link active">Write</a>
         <a href="/settings" class="nav-link">Settings</a>
       </div>
       <div class="nav-controls">
@@ -32,28 +32,15 @@
   </nav>
 
   <!-- Main Container -->
-  <div class="container">
-    <!-- Sidebar - Recent Entries -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2>Recent Entries</h2>
-        <button id="newEntryBtn" class="btn btn-primary" title="New Entry">+ New</button>
-      </div>
-      <div id="entriesList" class="entries-list">
-        <div class="empty-state">
-          <p>No entries yet.</p>
-          <p>Start writing to begin your journey.</p>
-        </div>
-      </div>
-    </aside>
-
+  <div class="container" style="display: block;">
     <!-- Main Editor -->
-    <main class="main-content">
+    <main class="main-content" style="max-width: 1000px; margin: 0 auto; display: block;">
       <div class="editor-container">
         <div class="editor-header">
           <input type="text" id="entryTitle" class="entry-title" placeholder="Entry title (optional)">
           <div class="entry-meta">
             <span id="entryDate" class="entry-date"></span>
+            <span id="modifiedDate" class="modified-date" style="display: none;"></span>
             <span id="wordCount" class="word-count">0 words</span>
           </div>
         </div>
@@ -61,28 +48,28 @@
         <textarea id="entryContent" class="entry-content" placeholder="Start writing your thoughts..."></textarea>
 
         <div class="editor-actions">
-          <button id="saveBtn" class="btn btn-primary">💾 Save Entry</button>
-          <button id="enhanceBtn" class="btn btn-secondary">✨ Enhance with AI</button>
+          <button id="enhanceBtn" class="btn btn-primary">✨ Enhance</button>
+          <button id="saveBtn" class="btn btn-secondary">💾 Save</button>
           <button id="deleteBtn" class="btn btn-danger" style="display: none;">🗑️ Delete</button>
           <div class="auto-save-indicator" id="autoSaveIndicator"></div>
         </div>
       </div>
 
-      <!-- AI Questions Panel -->
-      <div class="questions-panel" id="questionsPanel">
-        <div class="questions-header">
-          <h3>💭 Reflection Questions</h3>
-          <button id="closeQuestions" class="icon-btn">✕</button>
-        </div>
-        <div id="questionsList" class="questions-list">
-          <p class="questions-hint">Keep writing... AI will suggest questions to help you reflect.</p>
-        </div>
-        <div class="questions-loading" id="questionsLoading" style="display: none;">
+    </main>
+
+    <!-- AI Questions Sidebar (hidden until enhance is clicked) -->
+    <aside class="questions-sidebar" id="questionsSidebar" style="display: none;">
+      <div class="questions-sidebar-header">
+        <h3 id="sidebarTitle">✨ Enhancing...</h3>
+        <button id="closeSidebar" class="icon-btn">✕</button>
+      </div>
+      <div class="questions-sidebar-content" id="sidebarContent">
+        <div class="loading-state">
           <div class="spinner"></div>
-          <p>Thinking of questions...</p>
+          <p>Processing your entry...</p>
         </div>
       </div>
-    </main>
+    </aside>
   </div>
 
   <!-- Search Modal -->

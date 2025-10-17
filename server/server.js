@@ -20,11 +20,11 @@ app.use('/api/ai', aiRoutes);
 
 // Serve frontend
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/calendar.html'));
 });
 
-app.get('/calendar', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/calendar.html'));
+app.get('/editor', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.get('/settings', (req, res) => {

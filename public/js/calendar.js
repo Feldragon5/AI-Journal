@@ -45,9 +45,9 @@ class Calendar {
 
     this.editEntryBtn.addEventListener('click', () => {
       if (this.selectedEntry) {
-        // Navigate to main page with entry loaded
+        // Navigate to editor with entry loaded
         localStorage.setItem('loadEntryId', this.selectedEntry.id);
-        window.location.href = '/';
+        window.location.href = '/editor';
       }
     });
 
@@ -136,11 +136,13 @@ class Calendar {
 
       dayEl.addEventListener('click', () => {
         if (hasEntry) {
-          this.showEntryPreview(this.entriesByDate[dateKey][0]);
+          // Navigate to editor with entry loaded
+          localStorage.setItem('loadEntryId', this.entriesByDate[dateKey][0].id);
+          window.location.href = '/editor';
         } else {
           // Navigate to new entry for this date
           localStorage.setItem('newEntryDate', dateKey);
-          window.location.href = '/';
+          window.location.href = '/editor';
         }
       });
 
