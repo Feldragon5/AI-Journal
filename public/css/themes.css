@@ -31,22 +31,22 @@
 }
 
 .theme-aurora-purple.light-mode {
-  --bg-primary: #f8f6fc;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(245, 240, 255, 0.8);
-  --text-primary: #2d1654;
-  --text-secondary: #6a5a8a;
-  --border-color: rgba(138, 101, 234, 0.2);
-  --shadow: rgba(138, 101, 234, 0.15);
+  --bg-primary: #ede8f5;
+  --bg-secondary: rgba(248, 245, 252, 0.75);
+  --bg-tertiary: rgba(240, 235, 248, 0.65);
+  --text-primary: #3d2d5a;
+  --text-secondary: #7a6a9a;
+  --border-color: rgba(138, 101, 234, 0.18);
+  --shadow: rgba(138, 101, 234, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #e8e3f5 0%, #f0ebff 50%, #f8f6fc 100%);
-  --aurora-color-1: rgba(138, 101, 234, 0.25);
-  --aurora-color-2: rgba(196, 113, 237, 0.2);
-  --aurora-color-3: rgba(255, 110, 199, 0.15);
-  --aurora-color-4: rgba(180, 130, 251, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #ddd5ec 0%, #e8e0f8 50%, #ede8f5 100%);
+  --aurora-color-1: rgba(138, 101, 234, 0.2);
+  --aurora-color-2: rgba(196, 113, 237, 0.16);
+  --aurora-color-3: rgba(255, 110, 199, 0.12);
+  --aurora-color-4: rgba(180, 130, 251, 0.16);
 
   --accent-color: #8a65ea;
-  --accent-color-light: rgba(138, 101, 234, 0.1);
+  --accent-color-light: rgba(138, 101, 234, 0.08);
   --accent-color-dark: #6a45ca;
   --gradient-primary: linear-gradient(135deg, #8a65ea 0%, #c471ed 50%, #ff6ec7 100%);
 }
@@ -78,22 +78,22 @@
 }
 
 .theme-aurora-green.light-mode {
-  --bg-primary: #f6fcf8;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(240, 255, 245, 0.8);
-  --text-primary: #16542d;
-  --text-secondary: #5a8a6a;
-  --border-color: rgba(101, 234, 138, 0.2);
-  --shadow: rgba(101, 234, 138, 0.15);
+  --bg-primary: #e8f5ed;
+  --bg-secondary: rgba(245, 252, 248, 0.75);
+  --bg-tertiary: rgba(235, 248, 240, 0.65);
+  --text-primary: #2d5a3d;
+  --text-secondary: #6a9a7a;
+  --border-color: rgba(101, 234, 138, 0.18);
+  --shadow: rgba(101, 234, 138, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #e3f5e8 0%, #ebfff0 50%, #f6fcf8 100%);
-  --aurora-color-1: rgba(101, 234, 138, 0.25);
-  --aurora-color-2: rgba(113, 237, 196, 0.2);
-  --aurora-color-3: rgba(110, 255, 199, 0.15);
-  --aurora-color-4: rgba(130, 251, 180, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #d5ecdd 0%, #e0f8e8 50%, #e8f5ed 100%);
+  --aurora-color-1: rgba(101, 234, 138, 0.2);
+  --aurora-color-2: rgba(113, 237, 196, 0.16);
+  --aurora-color-3: rgba(110, 255, 199, 0.12);
+  --aurora-color-4: rgba(130, 251, 180, 0.16);
 
   --accent-color: #65ea8a;
-  --accent-color-light: rgba(101, 234, 138, 0.1);
+  --accent-color-light: rgba(101, 234, 138, 0.08);
   --accent-color-dark: #45ca6a;
   --gradient-primary: linear-gradient(135deg, #65ea8a 0%, #71edc4 50%, #6effc7 100%);
 }
@@ -125,22 +125,22 @@
 }
 
 .theme-aurora-blue.light-mode {
-  --bg-primary: #f6f8fc;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(240, 245, 255, 0.8);
-  --text-primary: #162d54;
-  --text-secondary: #5a6a8a;
-  --border-color: rgba(101, 170, 234, 0.2);
-  --shadow: rgba(101, 170, 234, 0.15);
+  --bg-primary: #e8edf5;
+  --bg-secondary: rgba(245, 248, 252, 0.75);
+  --bg-tertiary: rgba(235, 240, 248, 0.65);
+  --text-primary: #2d3d5a;
+  --text-secondary: #6a7a9a;
+  --border-color: rgba(101, 170, 234, 0.18);
+  --shadow: rgba(101, 170, 234, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #e3e8f5 0%, #ebf0ff 50%, #f6f8fc 100%);
-  --aurora-color-1: rgba(101, 170, 234, 0.25);
-  --aurora-color-2: rgba(113, 196, 237, 0.2);
-  --aurora-color-3: rgba(110, 199, 255, 0.15);
-  --aurora-color-4: rgba(130, 180, 251, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #d5ddec 0%, #e0e8f8 50%, #e8edf5 100%);
+  --aurora-color-1: rgba(101, 170, 234, 0.2);
+  --aurora-color-2: rgba(113, 196, 237, 0.16);
+  --aurora-color-3: rgba(110, 199, 255, 0.12);
+  --aurora-color-4: rgba(130, 180, 251, 0.16);
 
   --accent-color: #65aaea;
-  --accent-color-light: rgba(101, 170, 234, 0.1);
+  --accent-color-light: rgba(101, 170, 234, 0.08);
   --accent-color-dark: #458aca;
   --gradient-primary: linear-gradient(135deg, #65aaea 0%, #71c4ed 50%, #6ec7ff 100%);
 }
@@ -172,22 +172,22 @@
 }
 
 .theme-aurora-rose.light-mode {
-  --bg-primary: #fcf6f8;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(255, 240, 245, 0.8);
-  --text-primary: #54162d;
-  --text-secondary: #8a5a6a;
-  --border-color: rgba(234, 101, 138, 0.2);
-  --shadow: rgba(234, 101, 138, 0.15);
+  --bg-primary: #f5e8ed;
+  --bg-secondary: rgba(252, 245, 248, 0.75);
+  --bg-tertiary: rgba(248, 235, 240, 0.65);
+  --text-primary: #5a2d3d;
+  --text-secondary: #9a6a7a;
+  --border-color: rgba(234, 101, 138, 0.18);
+  --shadow: rgba(234, 101, 138, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #f5e3e8 0%, #ffebf0 50%, #fcf6f8 100%);
-  --aurora-color-1: rgba(234, 101, 138, 0.25);
-  --aurora-color-2: rgba(237, 113, 196, 0.2);
-  --aurora-color-3: rgba(255, 110, 199, 0.15);
-  --aurora-color-4: rgba(251, 130, 180, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #ecd5dd 0%, #f8e0e8 50%, #f5e8ed 100%);
+  --aurora-color-1: rgba(234, 101, 138, 0.2);
+  --aurora-color-2: rgba(237, 113, 196, 0.16);
+  --aurora-color-3: rgba(255, 110, 199, 0.12);
+  --aurora-color-4: rgba(251, 130, 180, 0.16);
 
   --accent-color: #ea658a;
-  --accent-color-light: rgba(234, 101, 138, 0.1);
+  --accent-color-light: rgba(234, 101, 138, 0.08);
   --accent-color-dark: #ca456a;
   --gradient-primary: linear-gradient(135deg, #ea658a 0%, #ed71c4 50%, #ff6ec7 100%);
 }
@@ -219,22 +219,22 @@
 }
 
 .theme-aurora-gold.light-mode {
-  --bg-primary: #fcf8f6;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(255, 245, 240, 0.8);
-  --text-primary: #542d16;
-  --text-secondary: #8a6a5a;
-  --border-color: rgba(234, 170, 101, 0.2);
-  --shadow: rgba(234, 170, 101, 0.15);
+  --bg-primary: #f5ede8;
+  --bg-secondary: rgba(252, 248, 245, 0.75);
+  --bg-tertiary: rgba(248, 240, 235, 0.65);
+  --text-primary: #5a3d2d;
+  --text-secondary: #9a7a6a;
+  --border-color: rgba(234, 170, 101, 0.18);
+  --shadow: rgba(234, 170, 101, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #f5e8e3 0%, #fff0eb 50%, #fcf8f6 100%);
-  --aurora-color-1: rgba(234, 170, 101, 0.25);
-  --aurora-color-2: rgba(237, 196, 113, 0.2);
-  --aurora-color-3: rgba(255, 184, 110, 0.15);
-  --aurora-color-4: rgba(251, 180, 130, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #ecddd5 0%, #f8e8e0 50%, #f5ede8 100%);
+  --aurora-color-1: rgba(234, 170, 101, 0.2);
+  --aurora-color-2: rgba(237, 196, 113, 0.16);
+  --aurora-color-3: rgba(255, 184, 110, 0.12);
+  --aurora-color-4: rgba(251, 180, 130, 0.16);
 
   --accent-color: #eaaa65;
-  --accent-color-light: rgba(234, 170, 101, 0.1);
+  --accent-color-light: rgba(234, 170, 101, 0.08);
   --accent-color-dark: #ca8a45;
   --gradient-primary: linear-gradient(135deg, #eaaa65 0%, #edc471 50%, #ffb86e 100%);
 }
@@ -266,22 +266,22 @@
 }
 
 .theme-aurora-teal.light-mode {
-  --bg-primary: #f6fcfc;
-  --bg-secondary: rgba(255, 255, 255, 0.95);
-  --bg-tertiary: rgba(240, 255, 255, 0.8);
-  --text-primary: #165454;
-  --text-secondary: #5a8a8a;
-  --border-color: rgba(101, 234, 228, 0.2);
-  --shadow: rgba(101, 234, 228, 0.15);
+  --bg-primary: #e8f5f5;
+  --bg-secondary: rgba(245, 252, 252, 0.75);
+  --bg-tertiary: rgba(235, 248, 248, 0.65);
+  --text-primary: #2d5a5a;
+  --text-secondary: #6a9a9a;
+  --border-color: rgba(101, 234, 228, 0.18);
+  --shadow: rgba(101, 234, 228, 0.12);
 
-  --aurora-base-bg: linear-gradient(to bottom, #e3f5f5 0%, #ebffff 50%, #f6fcfc 100%);
-  --aurora-color-1: rgba(101, 234, 228, 0.25);
-  --aurora-color-2: rgba(113, 237, 232, 0.2);
-  --aurora-color-3: rgba(110, 255, 245, 0.15);
-  --aurora-color-4: rgba(130, 251, 251, 0.2);
+  --aurora-base-bg: linear-gradient(to bottom, #d5ecec 0%, #e0f8f8 50%, #e8f5f5 100%);
+  --aurora-color-1: rgba(101, 234, 228, 0.2);
+  --aurora-color-2: rgba(113, 237, 232, 0.16);
+  --aurora-color-3: rgba(110, 255, 245, 0.12);
+  --aurora-color-4: rgba(130, 251, 251, 0.16);
 
   --accent-color: #65eae4;
-  --accent-color-light: rgba(101, 234, 228, 0.1);
+  --accent-color-light: rgba(101, 234, 228, 0.08);
   --accent-color-dark: #45cac4;
   --gradient-primary: linear-gradient(135deg, #65eae4 0%, #71ede8 50%, #6efff5 100%);
 }
@@ -313,10 +313,10 @@
 
 /* Light Mode Adjustments */
 .light-mode .aurora-bg {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .light-mode .aurora-bg::before,
 .light-mode .aurora-bg::after {
-  opacity: 0.3;
+  opacity: 0.2;
 }

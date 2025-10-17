@@ -13,6 +13,7 @@ class Settings {
     this.saveAiSettingsBtn = document.getElementById('saveAiSettings');
 
     // Theme elements
+    this.darkModeToggle = document.getElementById('darkModeToggle');
     this.themeOptions = document.querySelectorAll('.theme-option');
 
     // Stats elements
@@ -34,6 +35,7 @@ class Settings {
     this.setupEventListeners();
     this.updateStats();
     this.updateThemeSelection();
+    this.updateDarkModeToggle();
   }
 
   setupEventListeners() {
@@ -45,6 +47,11 @@ class Settings {
     this.writingStyleSelect.addEventListener('change', () => this.autoSaveSettings());
     this.questionFrequencySelect.addEventListener('change', () => this.autoSaveSettings());
     this.autoEnhanceCheckbox.addEventListener('change', () => this.autoSaveSettings());
+
+    // Dark mode toggle
+    this.darkModeToggle.addEventListener('change', () => {
+      themeManager.toggleMode();
+    });
 
     // Theme selection
     this.themeOptions.forEach(option => {
@@ -93,6 +100,11 @@ class Settings {
   async doneSettings() {
     await this.autoSaveSettings();
     window.location.href = '/';
+  }
+
+  updateDarkModeToggle() {
+    const isDark = themeManager.getTheme().darkMode;
+    this.darkModeToggle.checked = isDark;
   }
 
   updateThemeSelection() {

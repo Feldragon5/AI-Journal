@@ -199,6 +199,52 @@
 				color: var(--text-secondary);
 				margin-top: var(--spacing-xs);
 			}
+
+			/* Toggle Switch */
+			.toggle-switch {
+				position: relative;
+				display: inline-block;
+				width: 60px;
+				height: 30px;
+			}
+
+			.toggle-switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			.toggle-slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: var(--border-color);
+				transition: 0.3s;
+				border-radius: 30px;
+			}
+
+			.toggle-slider:before {
+				position: absolute;
+				content: "";
+				height: 22px;
+				width: 22px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				transition: 0.3s;
+				border-radius: 50%;
+			}
+
+			input:checked + .toggle-slider {
+				background: var(--gradient-primary);
+			}
+
+			input:checked + .toggle-slider:before {
+				transform: translateX(30px);
+			}
 		</style>
 	</head>
 	<body class="theme-aurora-purple dark-mode">
@@ -216,13 +262,6 @@
 					<a href="/settings" class="nav-link active">Settings</a>
 				</div>
 				<div class="nav-controls">
-					<button
-						id="themeToggle"
-						class="icon-btn"
-						title="Toggle dark/light mode"
-					>
-						<span class="icon">🌙</span>
-					</button>
 				</div>
 			</div>
 		</nav>
@@ -293,10 +332,15 @@
 				<!-- Theme Settings -->
 				<div class="settings-section">
 					<h2>🎨 Appearance</h2>
-					<p>
-						Choose your favorite aurora theme. Dark/Light mode can
-						be toggled with the button in the top right.
-					</p>
+					<p>Choose your favorite aurora theme and brightness mode.</p>
+
+					<div class="setting-item">
+						<label for="darkModeToggle">Dark Mode</label>
+						<label class="toggle-switch">
+							<input type="checkbox" id="darkModeToggle" checked>
+							<span class="toggle-slider"></span>
+						</label>
+					</div>
 
 					<div class="theme-grid">
 						<div class="theme-option" data-theme="aurora-purple">
