@@ -1,354 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings - Aurora Journal</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/themes.css">
-  <style>
-    .settings-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: var(--bg-secondary);
-      border-radius: 16px;
-      padding: var(--spacing-lg);
-      box-shadow: 0 4px 20px var(--shadow);
-      border: 1px solid var(--border-color);
-    }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Settings - Aurora Journal</title>
+		<link rel="stylesheet" href="/css/styles.css" />
+		<link rel="stylesheet" href="/css/themes.css" />
+		<style>
+			.settings-container {
+				max-width: 800px;
+				margin: 0 auto;
+				background: var(--bg-secondary);
+				border-radius: 16px;
+				padding: var(--spacing-lg);
+				box-shadow: 0 4px 20px var(--shadow);
+				border: 1px solid var(--border-color);
+			}
 
-    .settings-section {
-      margin-bottom: var(--spacing-xl);
-      padding-bottom: var(--spacing-lg);
-      border-bottom: 1px solid var(--border-color);
-    }
+			.settings-section {
+				margin-bottom: var(--spacing-xl);
+				padding-bottom: var(--spacing-lg);
+				border-bottom: 1px solid var(--border-color);
+			}
 
-    .settings-section:last-child {
-      border-bottom: none;
-    }
+			.settings-section:last-child {
+				border-bottom: none;
+			}
 
-    .settings-section h2 {
-      font-size: 1.3rem;
-      margin-bottom: var(--spacing-md);
-      color: var(--text-primary);
-    }
+			.settings-section h2 {
+				font-size: 1.3rem;
+				margin-bottom: var(--spacing-md);
+				color: var(--text-primary);
+			}
 
-    .settings-section p {
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-md);
-      font-size: 0.95rem;
-    }
+			.settings-section p {
+				color: var(--text-secondary);
+				margin-bottom: var(--spacing-md);
+				font-size: 0.95rem;
+			}
 
-    .setting-item {
-      margin-bottom: var(--spacing-md);
-    }
+			.setting-item {
+				margin-bottom: var(--spacing-md);
+			}
 
-    .setting-item label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: var(--spacing-xs);
-      color: var(--text-primary);
-    }
+			.setting-item label {
+				display: block;
+				font-weight: 600;
+				margin-bottom: var(--spacing-xs);
+				color: var(--text-primary);
+			}
 
-    .setting-item textarea,
-    .setting-item select,
-    .setting-item input[type="text"] {
-      width: 100%;
-      padding: var(--spacing-sm);
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      outline: none;
-      transition: var(--transition);
-    }
+			.setting-item textarea,
+			.setting-item select,
+			.setting-item input[type="text"] {
+				width: 100%;
+				padding: var(--spacing-sm);
+				border: 2px solid var(--border-color);
+				border-radius: 8px;
+				background: var(--bg-tertiary);
+				color: var(--text-primary);
+				font-family: var(--font-body);
+				font-size: 0.95rem;
+				outline: none;
+				transition: var(--transition);
+			}
 
-    .setting-item textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
+			.setting-item textarea {
+				min-height: 120px;
+				resize: vertical;
+			}
 
-    .setting-item textarea:focus,
-    .setting-item select:focus,
-    .setting-item input[type="text"]:focus {
-      border-color: var(--accent-color);
-    }
+			.setting-item textarea:focus,
+			.setting-item select:focus,
+			.setting-item input[type="text"]:focus {
+				border-color: var(--accent-color);
+			}
 
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: var(--spacing-sm);
-    }
+			.theme-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+				gap: var(--spacing-sm);
+			}
 
-    .theme-option {
-      padding: var(--spacing-md);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: var(--transition);
-      text-align: center;
-      background: var(--bg-tertiary);
-    }
+			.theme-option {
+				padding: var(--spacing-md);
+				border: 2px solid var(--border-color);
+				border-radius: 12px;
+				cursor: pointer;
+				transition: var(--transition);
+				text-align: center;
+				background: var(--bg-tertiary);
+			}
 
-    .theme-option:hover {
-      border-color: var(--accent-color);
-      transform: scale(1.05);
-    }
+			.theme-option:hover {
+				border-color: var(--accent-color);
+				transform: scale(1.05);
+			}
 
-    .theme-option.active {
-      border-color: var(--accent-color);
-      background: linear-gradient(135deg, var(--accent-color-light), var(--bg-tertiary));
-      box-shadow: 0 0 15px var(--shadow);
-    }
+			.theme-option.active {
+				border-color: var(--accent-color);
+				background: linear-gradient(
+					135deg,
+					var(--accent-color-light),
+					var(--bg-tertiary)
+				);
+				box-shadow: 0 0 15px var(--shadow);
+			}
 
-    .theme-preview {
-      width: 100%;
-      height: 60px;
-      border-radius: 8px;
-      margin-bottom: var(--spacing-xs);
-    }
+			.theme-preview {
+				width: 100%;
+				height: 60px;
+				border-radius: 8px;
+				margin-bottom: var(--spacing-xs);
+			}
 
-    .theme-preview.aurora-purple {
-      background: linear-gradient(135deg, #8a65ea, #c471ed, #ff6ec7);
-    }
+			.theme-preview.aurora-purple {
+				background: linear-gradient(135deg, #8a65ea, #c471ed, #ff6ec7);
+			}
 
-    .theme-preview.aurora-green {
-      background: linear-gradient(135deg, #65ea8a, #71edc4, #6effc7);
-    }
+			.theme-preview.aurora-green {
+				background: linear-gradient(135deg, #65ea8a, #71edc4, #6effc7);
+			}
 
-    .theme-preview.aurora-blue {
-      background: linear-gradient(135deg, #65aaea, #71c4ed, #6ec7ff);
-    }
+			.theme-preview.aurora-blue {
+				background: linear-gradient(135deg, #65aaea, #71c4ed, #6ec7ff);
+			}
 
-    .theme-preview.aurora-rose {
-      background: linear-gradient(135deg, #ea658a, #ed71c4, #ff6ec7);
-    }
+			.theme-preview.aurora-rose {
+				background: linear-gradient(135deg, #ea658a, #ed71c4, #ff6ec7);
+			}
 
-    .theme-preview.aurora-gold {
-      background: linear-gradient(135deg, #eaaa65, #edc471, #ffb86e);
-    }
+			.theme-preview.aurora-gold {
+				background: linear-gradient(135deg, #eaaa65, #edc471, #ffb86e);
+			}
 
-    .theme-preview.aurora-teal {
-      background: linear-gradient(135deg, #65eae4, #71ede8, #6efff5);
-    }
+			.theme-preview.aurora-teal {
+				background: linear-gradient(135deg, #65eae4, #71ede8, #6efff5);
+			}
 
-    .theme-name {
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
+			.theme-name {
+				font-weight: 600;
+				font-size: 0.9rem;
+			}
 
-    .checkbox-wrapper {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      padding: var(--spacing-sm);
-      background: var(--bg-tertiary);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
+			.checkbox-wrapper {
+				display: flex;
+				align-items: center;
+				gap: var(--spacing-sm);
+				padding: var(--spacing-sm);
+				background: var(--bg-tertiary);
+				border-radius: 8px;
+				cursor: pointer;
+				transition: var(--transition);
+			}
 
-    .checkbox-wrapper:hover {
-      background: var(--accent-color-light);
-    }
+			.checkbox-wrapper:hover {
+				background: var(--accent-color-light);
+			}
 
-    .checkbox-wrapper input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
+			.checkbox-wrapper input[type="checkbox"] {
+				width: 20px;
+				height: 20px;
+				cursor: pointer;
+			}
 
-    .export-buttons {
-      display: flex;
-      gap: var(--spacing-sm);
-      flex-wrap: wrap;
-    }
+			.export-buttons {
+				display: flex;
+				gap: var(--spacing-sm);
+				flex-wrap: wrap;
+			}
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: var(--spacing-md);
-      margin-top: var(--spacing-md);
-    }
+			.stats-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+				gap: var(--spacing-md);
+				margin-top: var(--spacing-md);
+			}
 
-    .stat-card {
-      padding: var(--spacing-md);
-      background: var(--bg-tertiary);
-      border-radius: 12px;
-      text-align: center;
-      border: 1px solid var(--border-color);
-    }
+			.stat-card {
+				padding: var(--spacing-md);
+				background: var(--bg-tertiary);
+				border-radius: 12px;
+				text-align: center;
+				border: 1px solid var(--border-color);
+			}
 
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 600;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+			.stat-value {
+				font-size: 2rem;
+				font-weight: 600;
+				background: var(--gradient-primary);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
 
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-top: var(--spacing-xs);
-    }
-  </style>
-</head>
-<body class="theme-aurora-purple dark-mode">
-  <div class="aurora-bg"></div>
+			.stat-label {
+				font-size: 0.9rem;
+				color: var(--text-secondary);
+				margin-top: var(--spacing-xs);
+			}
+		</style>
+	</head>
+	<body class="theme-aurora-purple dark-mode">
+		<div class="aurora-bg"></div>
 
-  <nav class="navbar">
-    <div class="nav-content">
-      <a href="/" class="logo" style="text-decoration: none; cursor: pointer;">⭐ Aurora Journal</a>
-      <div class="nav-links">
-        <a href="/settings" class="nav-link active">Settings</a>
-      </div>
-      <div class="nav-controls">
-        <button id="themeToggle" class="icon-btn" title="Toggle dark/light mode">
-          <span class="icon">🌙</span>
-        </button>
-      </div>
-    </div>
-  </nav>
+		<nav class="navbar">
+			<div class="nav-content">
+				<a
+					href="/"
+					class="logo"
+					style="text-decoration: none; cursor: pointer"
+					>⭐ Aurora Journal</a
+				>
+				<div class="nav-links">
+					<a href="/settings" class="nav-link active">Settings</a>
+				</div>
+				<div class="nav-controls">
+					<button
+						id="themeToggle"
+						class="icon-btn"
+						title="Toggle dark/light mode"
+					>
+						<span class="icon">🌙</span>
+					</button>
+				</div>
+			</div>
+		</nav>
 
-  <div class="container" style="display: block; padding: var(--spacing-lg);">
-    <div class="settings-container">
-      <h1 style="margin-bottom: var(--spacing-lg);">⚙️ Settings</h1>
+		<div
+			class="container"
+			style="display: block; padding: var(--spacing-lg)"
+		>
+			<div class="settings-container">
+				<h1 style="margin-bottom: var(--spacing-lg)">⚙️ Settings</h1>
 
-      <!-- AI Settings -->
-      <div class="settings-section">
-        <h2>🤖 AI Behavior</h2>
-        <p>Customize how the AI assists you with your journal entries.</p>
+				<!-- AI Settings -->
+				<div class="settings-section">
+					<h2>🤖 AI Behavior</h2>
+					<p>
+						Customize how the AI assists you with your journal
+						entries.
+					</p>
 
-        <div class="setting-item">
-          <label for="customInstructions">Custom AI Instructions</label>
-          <textarea id="customInstructions" placeholder="e.g., 'Always maintain a poetic style' or 'Focus on emotional depth and gratitude'"></textarea>
-        </div>
+					<div class="setting-item">
+						<label for="customInstructions"
+							>Custom AI Instructions</label
+						>
+						<textarea
+							id="customInstructions"
+							placeholder="e.g., 'Always maintain a poetic style' or 'Focus on emotional depth and gratitude'"
+						></textarea>
+					</div>
 
-        <div class="setting-item">
-          <label for="writingStyle">Writing Style</label>
-          <select id="writingStyle">
-            <option value="natural">Natural / Authentic</option>
-            <option value="formal">Formal</option>
-            <option value="casual">Casual</option>
-            <option value="poetic">Poetic</option>
-            <option value="concise">Concise</option>
-          </select>
-        </div>
+					<div class="setting-item">
+						<label for="writingStyle">Writing Style</label>
+						<select id="writingStyle">
+							<option value="natural">None</option>
+							<option value="formal">Formal</option>
+							<option value="casual">Casual</option>
+							<option value="poetic">Poetic</option>
+							<option value="concise">Concise</option>
+						</select>
+					</div>
 
-        <div class="setting-item">
-          <label for="questionFrequency">Question Generation</label>
-          <select id="questionFrequency">
-            <option value="always">Always generate questions</option>
-            <option value="sometimes">Sometimes (less frequent)</option>
-            <option value="never">Never (turn off questions)</option>
-          </select>
-        </div>
+					<div class="setting-item">
+						<label for="questionFrequency"
+							>Question Generation</label
+						>
+						<select id="questionFrequency">
+							<option value="always">
+								Always generate questions
+							</option>
+							<option value="sometimes">
+								Sometimes (less frequent)
+							</option>
+							<option value="never">
+								Never (turn off questions)
+							</option>
+						</select>
+					</div>
 
-        <div class="setting-item">
-          <label class="checkbox-wrapper">
-            <input type="checkbox" id="autoEnhance">
-            <span>Automatically enhance entries when saving</span>
-          </label>
-        </div>
+					<div class="setting-item">
+						<label class="checkbox-wrapper">
+							<input type="checkbox" id="autoEnhance" />
+							<span
+								>Automatically enhance entries when saving</span
+							>
+						</label>
+					</div>
 
-        <button id="saveAiSettings" class="btn btn-primary">Save AI Settings</button>
-      </div>
+					<button id="saveAiSettings" class="btn btn-primary">
+						Save AI Settings
+					</button>
+				</div>
 
-      <!-- Theme Settings -->
-      <div class="settings-section">
-        <h2>🎨 Appearance</h2>
-        <p>Choose your favorite aurora theme. Dark/Light mode can be toggled with the button in the top right.</p>
+				<!-- Theme Settings -->
+				<div class="settings-section">
+					<h2>🎨 Appearance</h2>
+					<p>
+						Choose your favorite aurora theme. Dark/Light mode can
+						be toggled with the button in the top right.
+					</p>
 
-        <div class="theme-grid">
-          <div class="theme-option" data-theme="aurora-purple">
-            <div class="theme-preview aurora-purple"></div>
-            <div class="theme-name">Aurora Purple</div>
-          </div>
+					<div class="theme-grid">
+						<div class="theme-option" data-theme="aurora-purple">
+							<div class="theme-preview aurora-purple"></div>
+							<div class="theme-name">Aurora Purple</div>
+						</div>
 
-          <div class="theme-option" data-theme="aurora-green">
-            <div class="theme-preview aurora-green"></div>
-            <div class="theme-name">Aurora Green</div>
-          </div>
+						<div class="theme-option" data-theme="aurora-green">
+							<div class="theme-preview aurora-green"></div>
+							<div class="theme-name">Aurora Green</div>
+						</div>
 
-          <div class="theme-option" data-theme="aurora-blue">
-            <div class="theme-preview aurora-blue"></div>
-            <div class="theme-name">Aurora Blue</div>
-          </div>
+						<div class="theme-option" data-theme="aurora-blue">
+							<div class="theme-preview aurora-blue"></div>
+							<div class="theme-name">Aurora Blue</div>
+						</div>
 
-          <div class="theme-option" data-theme="aurora-rose">
-            <div class="theme-preview aurora-rose"></div>
-            <div class="theme-name">Aurora Rose</div>
-          </div>
+						<div class="theme-option" data-theme="aurora-rose">
+							<div class="theme-preview aurora-rose"></div>
+							<div class="theme-name">Aurora Rose</div>
+						</div>
 
-          <div class="theme-option" data-theme="aurora-gold">
-            <div class="theme-preview aurora-gold"></div>
-            <div class="theme-name">Aurora Gold</div>
-          </div>
+						<div class="theme-option" data-theme="aurora-gold">
+							<div class="theme-preview aurora-gold"></div>
+							<div class="theme-name">Aurora Gold</div>
+						</div>
 
-          <div class="theme-option" data-theme="aurora-teal">
-            <div class="theme-preview aurora-teal"></div>
-            <div class="theme-name">Aurora Teal</div>
-          </div>
-        </div>
-      </div>
+						<div class="theme-option" data-theme="aurora-teal">
+							<div class="theme-preview aurora-teal"></div>
+							<div class="theme-name">Aurora Teal</div>
+						</div>
+					</div>
+				</div>
 
-      <!-- Statistics -->
-      <div class="settings-section">
-        <h2>📊 Your Statistics</h2>
+				<!-- Statistics -->
+				<div class="settings-section">
+					<h2>📊 Your Statistics</h2>
 
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value" id="totalEntries">0</div>
-            <div class="stat-label">Total Entries</div>
-          </div>
+					<div class="stats-grid">
+						<div class="stat-card">
+							<div class="stat-value" id="totalEntries">0</div>
+							<div class="stat-label">Total Entries</div>
+						</div>
 
-          <div class="stat-card">
-            <div class="stat-value" id="totalWords">0</div>
-            <div class="stat-label">Total Words</div>
-          </div>
+						<div class="stat-card">
+							<div class="stat-value" id="totalWords">0</div>
+							<div class="stat-label">Total Words</div>
+						</div>
 
-          <div class="stat-card">
-            <div class="stat-value" id="currentStreak">0</div>
-            <div class="stat-label">Day Streak</div>
-          </div>
+						<div class="stat-card">
+							<div class="stat-value" id="currentStreak">0</div>
+							<div class="stat-label">Day Streak</div>
+						</div>
 
-          <div class="stat-card">
-            <div class="stat-value" id="avgWordsPerEntry">0</div>
-            <div class="stat-label">Avg Words/Entry</div>
-          </div>
-        </div>
-      </div>
+						<div class="stat-card">
+							<div class="stat-value" id="avgWordsPerEntry">
+								0
+							</div>
+							<div class="stat-label">Avg Words/Entry</div>
+						</div>
+					</div>
+				</div>
 
-      <!-- Export & Backup -->
-      <div class="settings-section">
-        <h2>💾 Export & Backup</h2>
-        <p>Download your journal entries for backup or migration.</p>
+				<!-- Export & Backup -->
+				<div class="settings-section">
+					<h2>💾 Export & Backup</h2>
+					<p>
+						Download your journal entries for backup or migration.
+					</p>
 
-        <div class="export-buttons">
-          <button id="exportJson" class="btn btn-primary">Export as JSON</button>
-          <button id="exportText" class="btn btn-secondary">Export as Text</button>
-        </div>
-      </div>
+					<div class="export-buttons">
+						<button id="exportJson" class="btn btn-primary">
+							Export as JSON
+						</button>
+						<button id="exportText" class="btn btn-secondary">
+							Export as Text
+						</button>
+					</div>
+				</div>
 
-      <!-- About -->
-      <div class="settings-section">
-        <h2>ℹ️ About</h2>
-        <p><strong>Aurora Journal</strong> - An AI-powered journaling application with aurora-inspired themes</p>
-        <p>Version 1.0.0 | Phase 1: Local Development</p>
-        <p>Powered by Google Gemini AI</p>
-      </div>
-    </div>
-  </div>
+				<!-- About -->
+				<div class="settings-section">
+					<h2>ℹ️ About</h2>
+					<p>
+						<strong>Aurora Journal</strong> - An AI-powered
+						journaling application with aurora-inspired themes
+					</p>
+					<p>Version 1.0.0 | Phase 1: Local Development</p>
+					<p>Powered by Google Gemini AI</p>
+				</div>
+			</div>
+		</div>
 
-  <div id="toastContainer" class="toast-container"></div>
+		<div id="toastContainer" class="toast-container"></div>
 
-  <script src="/js/api-client.js"></script>
-  <script src="/js/theme-manager.js"></script>
-  <script src="/js/app.js"></script>
-  <script src="/js/settings.js"></script>
-</body>
+		<script src="/js/api-client.js"></script>
+		<script src="/js/theme-manager.js"></script>
+		<script src="/js/app.js"></script>
+		<script src="/js/settings.js"></script>
+	</body>
 </html>
