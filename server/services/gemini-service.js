@@ -14,12 +14,11 @@ class GeminiService {
 
   loadPrompts() {
     try {
-      const promptsPath = path.join(__dirname, '../config/prompts.json');
+      const promptsPath = path.join(__dirname, '../data/prompts.json');
       const promptsData = fs.readFileSync(promptsPath, 'utf8');
       this.prompts = JSON.parse(promptsData);
     } catch (error) {
       console.error('Error loading prompts configuration:', error);
-      // Fallback to default prompts if config file can't be loaded
       this.prompts = this.getDefaultPrompts();
     }
   }
