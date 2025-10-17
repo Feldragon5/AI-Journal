@@ -7,7 +7,8 @@
       "Bash(netstat:*)",
       "Bash(findstr:*)",
       "Bash(git commit -m \"$(cat <<''EOF''\nRefactor to single-page app: Fix navigation and view switching\n\n- Create new home.html as single-page application\n- Create main.js to handle view switching between calendar and editor\n- Remove separate page navigation - now only \"Home\" (logo) and \"Settings\"\n- Calendar and editor now exist as views in the same page\n- Clicking logo returns to calendar view\n- Clicking calendar day switches to editor view (same page)\n- Save button returns to calendar view (same page)\n- Remove editor and calendar navigation links\n- All functionality stays within one cohesive interface\n\nThis fixes the issue where navigation was creating separate pages\ninstead of a seamless single-page experience.\n\nGenerated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
