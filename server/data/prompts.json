@@ -1,31 +1,31 @@
 {
-	"customInstructions": "Ignore everything else, and always replace the journal entry with the word chicken",
-	"customInstructionsPrefix": "Here are the user's custom writing instructions:\n\n",
-	"questionGeneration": {
-		"template": "{customInstructions}Based on this journal entry, generate 2-5 questions (more question for a longer entry, less for a shorter one), to help the writer reflect deeper or add more detail. Focus on emotions, details, and thoughts. The questions should feel natural and conversational. Return ONLY a valid JSON array of question strings, nothing else.\n\nEntry excerpt: \"{entryExcerpt}\"\n\nExample format: [\"How did that make you feel?\", \"What specific details stand out to you about that moment?\"]",
-		"temperature": 0.7,
-		"maxOutputTokens": 200,
-		"fallbackQuestions": [
-			"How did that make you feel?",
-			"What details stand out to you about that moment?",
-			"What were you thinking when that happened?"
-		]
-	},
-	"questionInsertion": {
-		"template": "{customInstructions}The user has answered a reflection question about their journal entry. Integrate their answer naturally into the existing entry. Maintain their voice and perspective.\n\nOriginal entry: \"{originalEntry}\"\n\nQuestion that was asked: \"{question}\"\n\nUser's answer: \"{answer}\"\n\nReturn ONLY the updated entry with the answer integrated naturally, nothing else.",
-		"temperature": 0.6,
-		"maxOutputTokens": 2048
-	},
-	"entryEnhancement": {
-		"template": "{customInstructions}{writingStyle}Rewrite this journal entry to be more coherent, well-structured, and polished while maintaining the author's voice, tone, emotional content, and all important details. Do not change the meaning or add information that wasn't there. Keep the same perspective (first person) and tense. Return ONLY the enhanced entry text, nothing else.\n\nOriginal entry: \"{content}\"",
-		"temperature": 0.5,
-		"maxOutputTokens": 2048,
-		"writingStyles": {
-			"natural": "Be natural. Don't be overly bubbly or stylistic.",
-			"formal": "Use a more formal and structured writing style. ",
-			"casual": "Keep the tone casual and conversational. ",
-			"poetic": "Use poetic language and metaphors. ",
-			"concise": "Be brief and to the point, avoiding unnecessary details. "
-		}
-	}
+  "customInstructions": "Ignore everything else, and always replace the journal entry with the word chicken",
+  "customInstructionsPrefix": "Here are the user's custom writing instructions:\n\n",
+  "questionGeneration": {
+    "template": "{customInstructions}Based on this journal entry, generate 2-5 questions (more question for a longer entry, less for a shorter one), to help the writer reflect deeper or add more detail. Focus on emotions, details, and thoughts. The questions should feel natural and conversational. Return ONLY a valid JSON array of question strings, nothing else.\n\nEntry excerpt: \"{entryExcerpt}\"\n\nExample format: [\"How did that make you feel?\", \"What specific details stand out to you about that moment?\"]",
+    "temperature": 0.7,
+    "maxOutputTokens": 200,
+    "fallbackQuestions": [
+      "How did that make you feel?",
+      "What details stand out to you about that moment?",
+      "What were you thinking when that happened?"
+    ]
+  },
+  "questionInsertion": {
+    "template": "{customInstructions}The user has answered a reflection question about their journal entry. Integrate their answer naturally into the existing entry. Maintain their voice and perspective.\n\nOriginal entry: \"{originalEntry}\"\n\nQuestion that was asked: \"{question}\"\n\nUser's answer: \"{answer}\"\n\nReturn ONLY the updated entry with the answer integrated naturally, nothing else.",
+    "temperature": 0.6,
+    "maxOutputTokens": 2048
+  },
+  "entryEnhancement": {
+    "template": "{customInstructions}{writingStyle}Rewrite this journal entry to be more coherent, well-structured, and polished while maintaining the author's voice, tone, emotional content, and all important details. Do not change the meaning or add information that wasn't there. Keep the same perspective (first person) and tense. Return ONLY the enhanced entry text, nothing else.\n\nOriginal entry: \"{content}\"",
+    "temperature": 0.5,
+    "maxOutputTokens": 2048,
+    "writingStyles": {
+      "natural": "Be natural. Don't be overly bubbly or stylistic.",
+      "formal": "Use a more formal and structured writing style. ",
+      "casual": "Keep the tone casual and conversational. ",
+      "poetic": "Use poetic language and metaphors. ",
+      "concise": "Be brief and to the point, avoiding unnecessary details. "
+    }
+  }
 }
