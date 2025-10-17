@@ -36,11 +36,11 @@ class GeminiService {
   }
 
   async generateQuestions(entryExcerpt) {
-    // Build prompt from configuration
     const config = this.prompts.questionGeneration;
     const customInstructions = this.prompts.customInstructions || '';
+    const prefix = this.prompts.customInstructionsPrefix || '';
     const prompt = config.template
-      .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
+      .replace('{customInstructions}', customInstructions ? prefix + customInstructions + '\n\n' : '')
       .replace('{entryExcerpt}', entryExcerpt);
 
     try {
@@ -83,12 +83,14 @@ class GeminiService {
     }
   }
 
-  async enhanceEntry(content) {
-    // Build prompt from configuration
+  async enhanceEntry(content, writingStyle = 'natural') {
     const config = this.prompts.entryEnhancement;
     const customInstructions = this.prompts.customInstructions || '';
+    const prefix = this.prompts.customInstructionsPrefix || '';
+    const styleText = config.writingStyles[writingStyle] || '';
     const prompt = config.template
-      .replace('{customInstructions}', customInstructions ? customInstructions + '\n\n' : '')
+      .replace('{customInstructions}', customInstructions ? prefix + customInstructions + '\n\n' : '')
+      .replace('{writingStyle}', styleText)
       .replace('{content}', content);
 
     try {

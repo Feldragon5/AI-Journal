@@ -31,7 +31,10 @@ router.post('/enhance', async (req, res) => {
       return res.status(400).json({ error: 'Content too short to enhance' });
     }
 
-    const enhancedContent = await geminiService.enhanceEntry(content);
+    const settings = await storageService.getSettings();
+    const writingStyle = settings.writingStyle || 'natural';
+
+    const enhancedContent = await geminiService.enhanceEntry(content, writingStyle);
     res.json({ enhancedContent });
   } catch (error) {
     console.error('AI enhance error:', error);
