@@ -1,111 +1,219 @@
-# ✨ Cosmic Journal - AI-Powered Journaling App
+# 🌌 Aurora Journal - AI-Powered Journaling App
 
-A beautiful, AI-enhanced journaling application with a cosmic theme. Write your thoughts and let AI help you reflect deeper with contextual questions and coherence enhancement.
+A beautiful, AI-enhanced journaling application with stunning aurora borealis-inspired themes. Write your thoughts, reflect with AI-powered questions, and watch your entries come to life against animated aurora backgrounds.
 
-## 🌟 Features
+## 🎨 What Makes Aurora Journal Special
 
-### Core Features
-- **Smart Journal Editor**: Write freely with a clean, distraction-free interface
-- **AI Question Generation**: As you write, AI suggests thoughtful questions to help you reflect deeper
-- **AI Coherence Enhancement**: Polish your entries while maintaining your authentic voice
-- **Calendar View**: Browse your entries by date with a visual calendar
-- **Custom AI Instructions**: Personalize how the AI assists you
-- **Search**: Full-text search across all your entries
-- **Statistics**: Track your journaling habits with stats and streaks
-- **Export & Backup**: Export your journal as JSON or text files
+- **Stunning Aurora Backgrounds**: Pure CSS animated gradients that flow like the northern lights
+- **AI-Powered Reflection**: Smart questions that help you dig deeper into your thoughts
+- **Single-Page Experience**: Seamless navigation between calendar and editor views
+- **Multiple Aurora Themes**: 6 beautiful color palettes, each with light and dark modes
+- **Privacy-First**: All data stored locally on your computer
+- **No Ads, No Tracking**: Just you and your thoughts
 
-### Design Features
-- **5 Cosmic Themes**:
-  - Nebula Purple (default)
-  - Starlight Blue
-  - Galaxy Gold
-  - Aurora Green
-  - Cosmic Rose
-- **Light/Dark Mode**: Toggle between light and dark modes
-- **Animated Starfield**: Beautiful cosmic background with twinkling stars
-- **Responsive Design**: Works on desktop, tablet, and mobile
-
-### Technical Features
-- **Auto-save**: Entries automatically save every 30 seconds
-- **Keyboard Shortcuts**:
-  - `Ctrl/Cmd + S`: Save entry
-  - `Ctrl/Cmd + E`: Enhance with AI
-  - `Ctrl/Cmd + N`: New entry
-  - `Ctrl/Cmd + /`: Open search
-- **Local Storage**: All data stored locally in JSON files
-- **Privacy-First**: AI only processes when you explicitly request it
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm
 
-### Installation
+You'll need these installed on your computer:
+- **Node.js** (version 14 or newer) - [Download here](https://nodejs.org/)
+- **Git** (for cloning the repository) - [Download here](https://git-scm.com/)
 
-1. **Navigate to the project directory**:
-   ```bash
-   cd "AI Journal Webapp"
+### Installation Steps
+
+**1. Clone the repository**
+
+Open PowerShell or Command Prompt and run:
+
+```powershell
+git clone <repository-url>
+cd "AI Journal Webapp"
+```
+
+Or if you already have the files, just navigate to the folder:
+
+```powershell
+cd "path\to\AI Journal Webapp"
+```
+
+**2. Install dependencies**
+
+```powershell
+npm install
+```
+
+This will download all the required packages (only needs to be done once).
+
+**3. Set up your AI API key** (Optional but recommended)
+
+The app uses Google Gemini AI for enhancement features. To enable AI:
+
+1. Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a file named `.env` in the project root
+3. Add this line to the file:
+   ```
+   GEMINI_API_KEY=your-api-key-here
    ```
 
-2. **Install dependencies** (already done):
-   ```bash
-   npm install
-   ```
+> **Note**: The app works without an API key, but AI features (enhancement and questions) won't be available.
 
-3. **Start the server**:
-   ```bash
-   npm start
-   ```
+**4. Start the application**
 
-4. **Open your browser**:
-   Navigate to `http://localhost:3000`
+```powershell
+npm start
+```
 
-That's it! The app is now running locally on your machine.
+You should see:
+```
+🌌 AI Journal Server running on http://localhost:3000
+📝 Ready to capture your thoughts...
+```
 
-## 📖 How to Use
+**5. Open in your browser**
 
-### Writing Your First Entry
+Navigate to: **http://localhost:3000**
 
-1. **Start Writing**: Click in the text area and start writing your thoughts
-2. **Add a Title** (optional): Give your entry a title, or leave it blank to use the date
-3. **Watch for AI Questions**: After you stop typing for a few seconds, AI will suggest reflection questions
-4. **Click Questions**: Click on any question to add it to your entry
-5. **Save Your Entry**: Click "Save Entry" or press `Ctrl/Cmd + S`
+That's it! You're ready to start journaling! 🎉
 
-### Using AI Enhancement
+### Stopping the Server
 
-1. Write your entry
-2. Click "Enhance with AI" button
-3. AI will rewrite your entry to be more coherent while keeping your voice and meaning
-4. Review and save
+Press `Ctrl + C` in the PowerShell/Command Prompt window where the server is running.
 
-### Browsing Entries
+## 📖 How to Use Aurora Journal
 
-- **Sidebar**: Recent entries appear in the left sidebar. Click any entry to load it.
-- **Calendar**: Navigate to the Calendar page to browse entries by date
-- **Search**: Click the search icon or press `Ctrl/Cmd + /` to search all entries
+### Your First Entry
 
-### Customizing AI Behavior
+1. **The app opens to the Calendar view** - your home base
+2. **Click any day** to create or view an entry for that date
+3. **Write your thoughts** in the editor
+4. **Click "Enhance"** to improve your entry with AI (optional)
+5. **Answer reflection questions** that appear in the sidebar
+6. **Click "Save"** to save and return to the calendar
 
-1. Go to Settings page
-2. Add custom instructions for the AI (e.g., "Always maintain a poetic style")
-3. Choose your preferred writing style
-4. Adjust question frequency
-5. Toggle auto-enhance on save
-6. Save settings
+### Key Features Explained
 
-### Changing Themes
+#### 📅 Calendar View (Home)
+- Visual overview of all your journal entries
+- Days with entries are highlighted
+- Click any day to open the editor
+- One entry per day (entries on the same day are merged)
 
-1. Go to Settings page
-2. Click on any of the 5 cosmic themes
-3. Use the moon/sun icon in the nav bar to toggle dark/light mode
+#### ✍️ Editor View
+- Clean, distraction-free writing space
+- Optional title field (uses date if left empty)
+- Word count display
+- Auto-save every 30 seconds (for existing entries)
+- Modified timestamp shows when entry was last updated
 
-### Exporting Your Journal
+#### ✨ AI Enhancement
+When you click "Enhance":
+1. AI rewrites your entry for better flow while keeping your voice
+2. A sidebar appears with reflection questions
+3. Answer questions one at a time by typing and pressing Enter
+4. AI integrates your answers seamlessly into your entry
+5. Questions slide away as you answer them
 
-1. Go to Settings page
-2. Click "Export as JSON" for a backup file
-3. Or click "Export as Text" for a readable text file
+#### 🎨 Aurora Themes
+
+**6 Beautiful Color Palettes:**
+1. **Aurora Purple** (Default) - Purple, magenta, and pink waves
+2. **Aurora Green** - Northern lights green and teal
+3. **Aurora Blue** - Ice blue and cyan
+4. **Aurora Rose** - Rose pink and coral
+5. **Aurora Gold** - Warm gold and amber
+6. **Aurora Teal** - Tropical teal and aqua
+
+**Each theme has:**
+- Dark mode (default) - Deep space backgrounds with glowing auroras
+- Light mode - Soft, subtle aurora hints on bright backgrounds
+
+**To change themes:**
+1. Click "Settings" in the navigation
+2. Select your theme under "Appearance"
+3. Toggle light/dark mode with the moon/sun icon
+
+#### 🔍 Search
+- Click the search icon (🔍) or press `Ctrl + /`
+- Search across all your entries
+- Results show matching entries with previews
+
+#### ⚙️ Settings
+
+**Customize your experience:**
+- **AI Instructions**: Tell the AI how to help you (e.g., "Be encouraging" or "Focus on gratitude")
+- **Themes**: Switch between 6 aurora color palettes
+- **Light/Dark Mode**: Toggle between modes
+- **Export**: Download your journal as JSON or text
+- **Statistics**: View total entries, words written, and streaks
+
+### Keyboard Shortcuts
+
+- `Ctrl + S` or `Cmd + S` - Save entry
+- `Ctrl + E` or `Cmd + E` - Enhance with AI
+- `Ctrl + /` or `Cmd + /` - Open search
+- Click the logo (🌌 Aurora Journal) - Return to calendar
+
+## 🌟 Features Overview
+
+### Writing & Editing
+✅ Clean, distraction-free editor
+✅ Optional entry titles
+✅ Real-time word count
+✅ Auto-save every 30 seconds
+✅ One entry per day (auto-merges)
+✅ Modified timestamps
+
+### AI Features
+✅ **Coherence Enhancement** - Polish your writing while keeping your voice
+✅ **Reflection Questions** - AI-generated prompts to help you explore deeper
+✅ **Interactive Q&A** - Answer questions and AI weaves them into your entry
+✅ **Custom Instructions** - Personalize how AI assists you
+
+### Visual Design
+✅ **Aurora Backgrounds** - Flowing, animated gradients (pure CSS)
+✅ **6 Aurora Themes** - Each with light and dark modes
+✅ **Glassmorphism** - Frosted glass effects on panels
+✅ **Glow Effects** - Aurora-colored shadows and highlights
+✅ **Smooth Animations** - Elegant transitions throughout
+
+### Organization
+✅ **Calendar View** - Browse entries by date
+✅ **Search** - Full-text search across all entries
+✅ **Statistics** - Track writing habits and streaks
+✅ **Export** - JSON and text formats
+
+### Privacy & Control
+✅ **Local Storage** - All data stays on your computer
+✅ **No Tracking** - Zero analytics or data collection
+✅ **Opt-in AI** - AI only processes when you request it
+✅ **Offline Capable** - Write without internet (AI requires connection)
+
+## 📁 Where Your Data Lives
+
+All your journal entries are stored locally on your computer:
+
+```
+AI Journal Webapp/
+└── server/
+    └── data/
+        ├── entries.json    # Your journal entries
+        └── settings.json   # Your app settings
+```
+
+**Backup Recommendations:**
+- Export your journal regularly (Settings → Export as JSON)
+- Keep the entire `AI Journal Webapp` folder backed up
+- Use cloud storage to sync the folder across devices
+
+## 🎯 Tips for a Great Journaling Experience
+
+1. **Make it a habit** - Try journaling at the same time each day
+2. **Start small** - Even 2-3 sentences is valuable
+3. **Use the AI questions** - They help you discover insights you might miss
+4. **Experiment with themes** - Find the aurora that inspires you
+5. **Don't overthink it** - Write freely, the AI can help polish later
+6. **Click the logo to go home** - Quick return to calendar view
+7. **Export monthly** - Keep backups of your thoughts
 
 ## 🛠️ Project Structure
 
@@ -113,89 +221,111 @@ That's it! The app is now running locally on your machine.
 AI Journal Webapp/
 ├── server/
 │   ├── routes/
-│   │   ├── entries.js       # Entry CRUD endpoints
-│   │   └── ai.js            # AI processing endpoints
+│   │   ├── entries.js          # Entry CRUD API
+│   │   └── ai.js               # AI processing API
 │   ├── services/
-│   │   ├── gemini-service.js    # Gemini AI integration
-│   │   └── storage-service.js   # Local JSON storage
-│   ├── data/
-│   │   ├── entries.json     # Your journal entries (auto-created)
-│   │   └── settings.json    # App settings (auto-created)
-│   └── server.js            # Express server
+│   │   ├── gemini-service.js   # Google Gemini AI integration
+│   │   └── storage-service.js  # Local JSON storage
+│   ├── data/                   # Your data (auto-created)
+│   └── server.js               # Express server
 ├── public/
 │   ├── css/
-│   │   ├── styles.css       # Main styles
-│   │   └── themes.css       # Theme definitions
+│   │   ├── styles.css          # Main styles + aurora animations
+│   │   └── themes.css          # 6 aurora theme color palettes
 │   ├── js/
-│   │   ├── api-client.js    # API wrapper
-│   │   ├── app.js           # Main app controller
-│   │   ├── editor.js        # Editor with AI integration
-│   │   ├── calendar.js      # Calendar view
-│   │   ├── settings.js      # Settings page
-│   │   └── theme-manager.js # Theme switching
-│   ├── index.html           # Main journal page
-│   ├── calendar.html        # Calendar view
-│   └── settings.html        # Settings page
-├── .env                     # Environment variables (API key)
-├── package.json
-├── CLAUDE.md                # Project plan and documentation
-└── README.md                # This file
+│   │   ├── main.js             # Single-page app controller
+│   │   ├── api-client.js       # API wrapper
+│   │   ├── settings.js         # Settings page logic
+│   │   └── theme-manager.js    # Theme switching
+│   ├── home.html               # Main app (calendar + editor)
+│   └── settings.html           # Settings page
+├── .env                        # API key (you create this)
+├── .gitignore                  # Git ignore rules
+├── package.json                # Dependencies
+├── CLAUDE.md                   # Development notes
+└── README.md                   # This file
 ```
-
-## 🔐 Privacy & Security
-
-- **Your API Key**: Stored in `.env` file (never committed to git)
-- **Your Data**: Stored locally in `server/data/` directory
-- **AI Processing**: Only happens when you explicitly request it
-- **No Tracking**: No analytics or tracking of any kind
-
-## 🔮 Future Enhancements (Phase 2 & 3)
-
-### Phase 2: Firebase Deployment
-- Deploy to Firebase hosting (free tier)
-- Migrate storage to Firestore
-- Still single-user but accessible from anywhere
-
-### Phase 3: AWS with Multi-User Support
-- User authentication
-- Multi-user support
-- Email reminders
-- Social features
-- Mobile app
-
-## 📝 Tips for Best Experience
-
-1. **Write regularly**: Build a daily journaling habit
-2. **Use AI questions**: They help you dig deeper into your thoughts
-3. **Experiment with themes**: Find the one that feels most calming to you
-4. **Export regularly**: Back up your journal periodically
-5. **Customize AI**: Add personal instructions to make AI more helpful for your style
-6. **Try keyboard shortcuts**: They speed up your workflow
 
 ## 🐛 Troubleshooting
 
-### Server won't start
-- Make sure port 3000 is not in use
-- Check that all dependencies are installed: `npm install`
+### "Port 3000 is already in use"
 
-### AI features not working
-- Verify your Gemini API key in `.env` file
-- Check your internet connection (AI requires internet)
+**Solution 1: Kill the process**
+```powershell
+# Find what's using port 3000
+netstat -ano | findstr ":3000"
 
-### Entries not saving
-- Check that `server/data/` directory exists
-- Verify file permissions
+# Kill it (replace PID with the number you found)
+taskkill /PID <PID> /F
+```
+
+**Solution 2: Use a different port**
+Edit `server/server.js` and change `PORT = 3000` to another number like `3001`.
+
+### "AI features aren't working"
+
+**Check these:**
+1. Do you have a `.env` file with your API key?
+2. Is your internet connection working?
+3. Is the API key valid? Test it at [Google AI Studio](https://makersuite.google.com/)
+
+### "Entries aren't saving"
+
+**Check:**
+1. Is the `server/data/` folder created? (It should create automatically)
+2. Run the server with admin privileges if on Windows
+3. Check console for error messages (press F12 in browser)
+
+### "Aurora background isn't showing"
+
+**Try:**
+1. Hard refresh your browser: `Ctrl + Shift + R` or `Ctrl + F5`
+2. Clear browser cache
+3. Check if CSS files are loading (F12 → Network tab)
+
+### "Server won't start - Module not found"
+
+**Solution:**
+```powershell
+# Delete node_modules and reinstall
+rm -r node_modules
+npm install
+```
+
+## 🔮 Future Plans
+
+### Coming Soon
+- Additional aurora themes (coral, violet, ocean)
+- Theme preview before selecting
+- Entry templates and prompts
+- Mood tracking
+- Voice-to-text journaling
+
+### Phase 2: Cloud Deployment
+- Firebase hosting (free tier)
+- Sync across devices
+- Still single-user
+
+### Phase 3: Social Features
+- User authentication
+- Optional entry sharing
+- Multi-user support
+
+## 🙏 Credits
+
+- **Built with**: Node.js, Express, Vanilla JavaScript
+- **AI powered by**: Google Gemini 2.0 Flash
+- **Inspired by**: The beauty of the Aurora Borealis
+- **Developed by**: Matthew (with assistance from Claude AI)
 
 ## 📄 License
 
-This project is for personal use. Feel free to modify and customize for your own needs.
-
-## 🙏 Acknowledgments
-
-- Built with Node.js and Express
-- AI powered by Google Gemini 2.0 Flash
-- Cosmic theme inspired by the beauty of space
+Free for personal use. Modify and customize as you wish!
 
 ---
 
-**Enjoy your journaling journey through the cosmos!** ✨🌌
+**✨ May your journaling journey be as beautiful as the northern lights!** 🌌
+
+**Questions or Issues?** Check the troubleshooting section above or review the code comments.
+
+**Happy Journaling!** 📝💜

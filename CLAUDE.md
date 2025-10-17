@@ -443,3 +443,298 @@ All files match the planned structure. Key files:
 - **Phase 3**: AWS migration with authentication - requires AWS account
 
 The app is fully functional and ready for personal use! All core features are working as designed.
+
+---
+
+## Major Update: Aurora Journal Rebrand (October 17, 2025)
+
+### Rebranding Complete ✅
+
+**From "Cosmic Journal" to "Aurora Journal"**
+- New name reflects the beautiful aurora borealis-inspired aesthetic
+- Logo updated: 🌌 Aurora Journal
+- All documentation, code, and UI updated with new branding
+
+### Aurora Background System ✅
+
+**Pure CSS Aurora Animation**
+- Replaced static starfield with dynamic aurora borealis effect
+- Multiple layered radial gradients with blur filters create realistic aurora curtains
+- Flowing animations (20-25 second cycles) simulate natural aurora movement
+- Stars twinkling subtly in the background for deep space atmosphere
+- No images required - 100% CSS-based
+
+**Technical Implementation:**
+```css
+- Multiple ::before and ::after pseudo-elements for aurora layers
+- Radial gradients positioned at different points
+- Heavy blur (60-80px) for soft, glowing effect
+- Transform animations: translate, rotate, scale for wave motion
+- Opacity animations for pulsing aurora glow
+```
+
+### Aurora Theme System ✅
+
+**6 Beautiful Color Palettes** (Each with Dark + Light mode):
+
+1. **Aurora Purple** (Default/Main)
+   - Colors: Purple (#8a65ea), Magenta (#c471ed), Pink (#ff6ec7)
+   - Perfect for: Creative writing, emotional journaling
+
+2. **Aurora Green** (Northern Lights)
+   - Colors: Green (#65ea8a), Teal (#71edc4), Turquoise (#6effc7)
+   - Perfect for: Nature journaling, gratitude practice
+
+3. **Aurora Blue** (Ice Aurora)
+   - Colors: Blue (#65aaea), Cyan (#71c4ed), Ice Blue (#6ec7ff)
+   - Perfect for: Calm reflection, analytical writing
+
+4. **Aurora Rose** (Pink Aurora)
+   - Colors: Rose (#ea658a), Pink (#ed71c4), Hot Pink (#ff6ec7)
+   - Perfect for: Romantic thoughts, personal growth
+
+5. **Aurora Gold** (Warm Aurora)
+   - Colors: Gold (#eaaa65), Amber (#edc471), Orange (#ffb86e)
+   - Perfect for: Morning journaling, positive reflections
+
+6. **Aurora Teal** (Tropical Aurora)
+   - Colors: Teal (#65eae4), Aqua (#71ede8), Mint (#6efff5)
+   - Perfect for: Travel journaling, adventure logs
+
+### Single-Page Application Architecture ✅
+
+**Navigation Redesign:**
+- Removed "Write" and "Calendar" navigation tabs
+- Home = Calendar view (main page at `/`)
+- Editor view opens when clicking calendar days
+- Logo click returns to calendar
+- Seamless view switching without page reloads
+
+**Implementation:**
+- Created `home.html` - single page containing both views
+- Created `main.js` - handles view switching logic
+- CSS classes `.view` and `.view.active` control visibility
+- Deleted old `index.html` and `calendar.html` files
+
+### Enhanced Features ✅
+
+**One Entry Per Day:**
+- Clicking same day multiple times loads/updates existing entry
+- No duplicate entries possible
+- Entries automatically merge if created on existing date
+
+**Modified Timestamps:**
+- Shows when entry was last updated
+- Displays only if different from creation time
+- Format: "Modified: Oct 17, 2:45 PM"
+
+**AI Questions Redesign:**
+- Questions appear in sidebar AFTER clicking "Enhance"
+- Interactive Q&A flow - answer one question at a time
+- AI integrates answers automatically into entry
+- Smooth slide-out animations when questions are answered
+
+**Visual Enhancements:**
+- Glassmorphism effects (backdrop blur on panels)
+- Aurora glow on buttons in dark mode
+- Calendar entries glow with aurora colors
+- Smoother, more natural animations throughout
+
+---
+
+## Next Steps & Future Development
+
+### Immediate Priorities (Phase 1.5 - Polish & UX)
+
+1. **Theme Selector Enhancement**
+   - [ ] Update settings page to show all 6 aurora themes
+   - [ ] Add theme preview cards showing colors
+   - [ ] Make theme switching more intuitive
+   - [ ] Persist selected theme in localStorage
+
+2. **Theme Manager Integration**
+   - [ ] Update `theme-manager.js` to handle new aurora themes
+   - [ ] Ensure light/dark toggle works with all themes
+   - [ ] Test theme persistence across sessions
+
+3. **Additional Aurora Themes (Optional)**
+   - [ ] Aurora Coral - Coral reef-inspired oranges and pinks
+   - [ ] Aurora Violet - Deep purples and indigos
+   - [ ] Aurora Ocean - Deep blues and aquamarines
+   - [ ] Each with light/dark mode variants
+
+4. **Performance Optimization**
+   - [ ] Test aurora animations on lower-end devices
+   - [ ] Add reduced motion option for accessibility
+   - [ ] Optimize CSS for faster initial load
+
+5. **Quality of Life Improvements**
+   - [ ] Add "Today" button in editor to quickly jump to today's entry
+   - [ ] Show entry count on calendar days
+   - [ ] Add tooltips explaining features for first-time users
+   - [ ] Improve mobile responsiveness for aurora effects
+
+### Phase 1.9 - Local Enhancements (Before Cloud)
+
+6. **Statistics Dashboard Expansion**
+   - [ ] Mood tracking (optional tags/emojis)
+   - [ ] Visualization of writing patterns (graphs)
+   - [ ] Most used words/phrases
+   - [ ] Longest streak achievements
+
+7. **Entry Features**
+   - [ ] Entry templates (gratitude, goals, daily log)
+   - [ ] Quick prompts for writer's block
+   - [ ] Markdown support for formatting
+   - [ ] Entry tagging system
+
+8. **AI Improvements**
+   - [ ] More granular AI settings (creativity, formality)
+   - [ ] Save/load custom AI prompt templates
+   - [ ] AI-generated entry summaries
+   - [ ] Weekly/monthly AI insights
+
+9. **Export & Backup**
+   - [ ] PDF export with aurora theme styling
+   - [ ] Markdown export
+   - [ ] Automatic backup reminders
+   - [ ] Import from other journaling apps
+
+10. **Accessibility**
+    - [ ] Screen reader improvements
+    - [ ] Keyboard navigation enhancements
+    - [ ] High contrast mode option
+    - [ ] Font size controls
+
+### Phase 2: Firebase Deployment (Cloud Single-User)
+
+**Goals:**
+- Deploy Aurora Journal to the web
+- Access from any device
+- Still single-user (no auth needed yet)
+- Stay within Firebase free tier
+
+**Tasks:**
+1. **Firebase Setup**
+   - [ ] Create Firebase project
+   - [ ] Set up Firebase Hosting
+   - [ ] Configure Firebase Functions
+   - [ ] Set up Firestore database
+
+2. **Data Migration**
+   - [ ] Migrate local JSON storage to Firestore
+   - [ ] Update storage service abstraction layer
+   - [ ] Test data sync and consistency
+   - [ ] Create migration tool for local→cloud
+
+3. **Security & Environment**
+   - [ ] Move API key to Firebase Functions config
+   - [ ] Set up Firestore security rules (single-user)
+   - [ ] Configure CORS for cloud environment
+   - [ ] Test API endpoints in cloud
+
+4. **Testing & Deployment**
+   - [ ] Test all features in Firebase environment
+   - [ ] Verify free tier usage limits
+   - [ ] Set up custom domain (optional)
+   - [ ] Create deployment documentation
+
+### Phase 3: AWS Multi-User Platform (Long-term)
+
+**Goals:**
+- Full authentication system
+- Multiple users with isolated data
+- Social features (optional sharing)
+- Scalable infrastructure
+
+**Tasks:**
+1. **Authentication**
+   - [ ] AWS Cognito or Auth0 setup
+   - [ ] Login/signup flows
+   - [ ] Password reset functionality
+   - [ ] Session management
+
+2. **Database**
+   - [ ] Choose: RDS PostgreSQL vs DynamoDB
+   - [ ] Design multi-user schema
+   - [ ] Implement data isolation per user
+   - [ ] Migration scripts from Firebase
+
+3. **Infrastructure**
+   - [ ] AWS Lambda for serverless backend (or)
+   - [ ] EC2 instance for traditional server
+   - [ ] S3 for file storage (if needed)
+   - [ ] CloudFront for CDN
+
+4. **Features**
+   - [ ] Email reminders (AWS SES)
+   - [ ] Entry sharing with friends
+   - [ ] Privacy controls (public/private entries)
+   - [ ] Export improvements
+
+5. **Mobile**
+   - [ ] Progressive Web App optimization
+   - [ ] Native mobile app (React Native?)
+   - [ ] Offline sync capabilities
+
+### Future Vision Ideas (Blue Sky)
+
+**Advanced AI Features:**
+- Voice-to-text journaling with AI transcription
+- AI-generated insights: "Your mood seems lower on Mondays"
+- Photo analysis: Add photos, AI describes/interprets them
+- AI conversation mode: Chat with AI about your day
+
+**Wellness Integration:**
+- Mood tracking with visualizations
+- Gratitude prompts
+- Integration with fitness trackers
+- Mental health check-ins
+
+**Social Features (Optional):**
+- Share specific entries with therapist/friend
+- Collaborative journaling with partner
+- Community prompts/challenges
+- Anonymous entry sharing
+
+**Creative Features:**
+- Poetry mode (AI helps write poems)
+- Story writing mode (fiction journaling)
+- Travel journal mode (map integration)
+- Dream journal with symbol interpretation
+
+---
+
+## Development Guidelines for Future Work
+
+### Code Standards
+- Keep vanilla JS approach (no framework bloat)
+- Maintain aurora theme consistency
+- Comment complex CSS animations
+- Document new API endpoints
+
+### Design Principles
+- Aurora aesthetic must be maintained
+- Animations should be smooth and purposeful
+- Dark mode should always be beautiful (it's the default)
+- Keep the calming, inspiring atmosphere
+
+### Testing Checklist
+- Test all 6 themes in dark and light mode
+- Verify aurora animations on various devices
+- Check keyboard shortcuts still work
+- Ensure one-entry-per-day logic holds
+- Test AI features with real use cases
+
+### Git Workflow
+- Descriptive commit messages with emoji
+- Branch for major features
+- Keep main branch stable
+- Update CLAUDE.md after major changes
+
+---
+
+**Last Updated**: October 17, 2025
+**Current Version**: Aurora Journal 1.0 (Phase 1 Complete)
+**Status**: Production-ready for local personal use
+**Next Milestone**: Theme selector completion, then Phase 2 planning
