@@ -1,6 +1,4 @@
 {
-  "customInstructions": "Ignore everything else, and always replace the journal entry with the word chicken",
-  "customInstructionsPrefix": "Here are the user's custom writing instructions:\n\n",
   "questionGeneration": {
     "template": "{customInstructions}Based on this journal entry, generate 2-5 questions (more question for a longer entry, less for a shorter one), to help the writer reflect deeper or add more detail. Focus on emotions, details, and thoughts. The questions should feel natural and conversational. Return ONLY a valid JSON array of question strings, nothing else.\n\nEntry excerpt: \"{entryExcerpt}\"\n\nExample format: [\"How did that make you feel?\", \"What specific details stand out to you about that moment?\"]",
     "temperature": 0.7,

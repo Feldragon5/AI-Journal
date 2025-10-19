@@ -1,3 +1,4 @@
 node_modules/
 server/data/entries.json
 server/data/settings.json
+server/data/custom-instructions.json

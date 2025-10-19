@@ -21,6 +21,23 @@ class GeminiService {
       console.error('Error loading prompts configuration:', error);
       this.prompts = this.getDefaultPrompts();
     }
+
+    // Load custom instructions initially
+    this.loadCustomInstructions();
+  }
+
+  loadCustomInstructions() {
+    try {
+      const customInstructionsPath = path.join(__dirname, '../data/custom-instructions.json');
+      const customInstructionsData = fs.readFileSync(customInstructionsPath, 'utf8');
+      const customInstructionsConfig = JSON.parse(customInstructionsData);
+      this.customInstructions = customInstructionsConfig.customInstructions || '';
+      this.customInstructionsPrefix = customInstructionsConfig.customInstructionsPrefix || '';
+    } catch (error) {
+      console.warn('Custom instructions file not found, using defaults');
+      this.customInstructions = '';
+      this.customInstructionsPrefix = '';
+    }
   }
 
   getDefaultPrompts() {
@@ -36,11 +53,12 @@ class GeminiService {
   }
 
   async generateQuestions(entryExcerpt) {
+    // Reload custom instructions to get latest changes
+    this.loadCustomInstructions();
+
     const config = this.prompts.questionGeneration;
-    const customInstructions = this.prompts.customInstructions || '';
-    const prefix = this.prompts.customInstructionsPrefix || '';
     const prompt = config.template
-      .replace('{customInstructions}', customInstructions ? prefix + customInstructions + '\n\n' : '')
+      .replace('{customInstructions}', this.customInstructions ? this.customInstructionsPrefix + this.customInstructions + '\n\n' : '')
       .replace('{entryExcerpt}', entryExcerpt);
 
     try {
@@ -83,13 +101,38 @@ class GeminiService {
     }
   }
 
+  async insertAnswer(originalEntry, question, answer) {
+    // Reload custom instructions to get latest changes
+    this.loadCustomInstructions();
+
+    const config = this.prompts.questionInsertion;
+    const prompt = config.template
+      .replace('{customInstructions}', this.customInstructions ? this.customInstructionsPrefix + this.customInstructions + '\n\n' : '')
+      .replace('{originalEntry}', originalEntry)
+      .replace('{question}', question)
+      .replace('{answer}', answer);
+
+    try {
+      const response = await this.makeRequest(prompt, {
+        temperature: config.temperature,
+        maxOutputTokens: config.maxOutputTokens
+      });
+
+      return response.trim();
+    } catch (error) {
+      console.error('Error inserting answer:', error);
+      throw error;
+    }
+  }
+
   async enhanceEntry(content, writingStyle = 'natural') {
+    // Reload custom instructions to get latest changes
+    this.loadCustomInstructions();
+
     const config = this.prompts.entryEnhancement;
-    const customInstructions = this.prompts.customInstructions || '';
-    const prefix = this.prompts.customInstructionsPrefix || '';
     const styleText = config.writingStyles[writingStyle] || '';
     const prompt = config.template
-      .replace('{customInstructions}', customInstructions ? prefix + customInstructions + '\n\n' : '')
+      .replace('{customInstructions}', this.customInstructions ? this.customInstructionsPrefix + this.customInstructions + '\n\n' : '')
       .replace('{writingStyle}', styleText)
       .replace('{content}', content);
 

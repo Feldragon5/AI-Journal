@@ -5,6 +5,7 @@ const DATA_DIR = path.join(__dirname, '../data');
 const ENTRIES_FILE = path.join(DATA_DIR, 'entries.json');
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json');
 const PROMPTS_FILE = path.join(DATA_DIR, 'prompts.json');
+const CUSTOM_INSTRUCTIONS_FILE = path.join(DATA_DIR, 'custom-instructions.json');
 
 class StorageService {
   constructor() {
@@ -34,6 +35,17 @@ class StorageService {
           darkMode: true
         };
         await fs.writeFile(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2));
+      }
+
+      // Initialize custom instructions file if it doesn't exist
+      try {
+        await fs.access(CUSTOM_INSTRUCTIONS_FILE);
+      } catch {
+        const defaultCustomInstructions = {
+          customInstructions: '',
+          customInstructionsPrefix: "Here are the user's custom writing instructions:\n\n"
+        };
+        await fs.writeFile(CUSTOM_INSTRUCTIONS_FILE, JSON.stringify(defaultCustomInstructions, null, 2));
       }
     } catch (error) {
       console.error('Error initializing storage:', error);
@@ -127,9 +139,9 @@ class StorageService {
       const data = await fs.readFile(SETTINGS_FILE, 'utf8');
       const settings = JSON.parse(data);
 
-      // Get customInstructions from prompts.json
-      const prompts = await this.getPrompts();
-      settings.customInstructions = prompts.customInstructions || '';
+      // Get customInstructions from custom-instructions.json
+      const customInstructionsConfig = await this.getCustomInstructions();
+      settings.customInstructions = customInstructionsConfig.customInstructions || '';
 
       return settings;
     } catch (error) {
@@ -141,9 +153,9 @@ class StorageService {
   async updateSettings(settings) {
     const currentSettings = await this.getSettings();
 
-    // If customInstructions is being updated, save to prompts.json
+    // If customInstructions is being updated, save to custom-instructions.json
     if (settings.customInstructions !== undefined) {
-      await this.updatePrompts({ customInstructions: settings.customInstructions });
+      await this.updateCustomInstructions({ customInstructions: settings.customInstructions });
       delete settings.customInstructions; // Remove from settings object
     }
 
@@ -151,8 +163,8 @@ class StorageService {
     await fs.writeFile(SETTINGS_FILE, JSON.stringify(updatedSettings, null, 2));
 
     // Add back customInstructions for return value
-    const prompts = await this.getPrompts();
-    updatedSettings.customInstructions = prompts.customInstructions || '';
+    const customInstructionsConfig = await this.getCustomInstructions();
+    updatedSettings.customInstructions = customInstructionsConfig.customInstructions || '';
 
     return updatedSettings;
   }
@@ -163,7 +175,7 @@ class StorageService {
       return JSON.parse(data);
     } catch (error) {
       console.error('Error reading prompts:', error);
-      return { customInstructions: '' };
+      return {};
     }
   }
 
@@ -174,6 +186,25 @@ class StorageService {
 
     // Reload prompts in gemini service (if needed in future)
     return updatedPrompts;
+  }
+
+  async getCustomInstructions() {
+    try {
+      const data = await fs.readFile(CUSTOM_INSTRUCTIONS_FILE, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error reading custom instructions:', error);
+      return { customInstructions: '', customInstructionsPrefix: "Here are the user's custom writing instructions:\n\n" };
+    }
+  }
+
+  async updateCustomInstructions(updates) {
+    const currentConfig = await this.getCustomInstructions();
+    const updatedConfig = { ...currentConfig, ...updates };
+    await fs.writeFile(CUSTOM_INSTRUCTIONS_FILE, JSON.stringify(updatedConfig, null, 2));
+
+    // Note: Gemini service will need to reload custom instructions on next request
+    return updatedConfig;
   }
 
   generateId() {
