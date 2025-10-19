@@ -8,8 +8,8 @@ class App {
 
     // New dropdown search elements
     this.searchBar = document.getElementById('searchBar');
+    this.searchBarInput = document.getElementById('searchBarInput');
     this.searchDropdown = document.getElementById('searchDropdown');
-    this.searchDropdownInput = document.getElementById('searchDropdownInput');
     this.searchDropdownResults = document.getElementById('searchDropdownResults');
 
     // Old modal elements (keep for backward compatibility)
@@ -35,22 +35,29 @@ class App {
       });
     }
 
-    // Dropdown search bar - click to open
-    if (this.searchBar) {
-      this.searchBar.addEventListener('click', () => {
-        this.toggleSearchDropdown();
+    // Dropdown search bar input
+    if (this.searchBarInput) {
+      // Focus opens dropdown
+      this.searchBarInput.addEventListener('focus', () => {
+        this.openSearchDropdown();
       });
-    }
 
-    // Dropdown search input
-    if (this.searchDropdownInput) {
-      this.searchDropdownInput.addEventListener('input', (e) => {
+      // Input triggers search
+      this.searchBarInput.addEventListener('input', (e) => {
         this.performDropdownSearch(e.target.value);
       });
 
-      // Prevent closing when typing in input
-      this.searchDropdownInput.addEventListener('click', (e) => {
-        e.stopPropagation();
+      // Update placeholder on focus/blur
+      this.searchBarInput.addEventListener('focus', () => {
+        this.searchBarInput.placeholder = 'Type to search...';
+      });
+
+      this.searchBarInput.addEventListener('blur', () => {
+        setTimeout(() => {
+          if (!this.searchDropdown.classList.contains('active')) {
+            this.searchBarInput.placeholder = 'Search entries...';
+          }
+        }, 200);
       });
     }
 
@@ -83,7 +90,9 @@ class App {
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === '/') {
         e.preventDefault();
-        this.toggleSearchDropdown();
+        if (this.searchBarInput) {
+          this.searchBarInput.focus();
+        }
       }
       if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
         e.preventDefault();
@@ -186,13 +195,6 @@ class App {
     this.searchDropdown.classList.add('active');
     this.searchBar.classList.add('active');
 
-    if (this.searchDropdownInput) {
-      setTimeout(() => {
-        this.searchDropdownInput.focus();
-      }, 100);
-      this.searchDropdownInput.value = '';
-    }
-
     this.searchDropdownResults.innerHTML = '<p class="search-no-results">Start typing to search...</p>';
   }
 
@@ -202,8 +204,9 @@ class App {
     this.searchDropdown.classList.remove('active');
     this.searchBar.classList.remove('active');
 
-    if (this.searchDropdownInput) {
-      this.searchDropdownInput.value = '';
+    if (this.searchBarInput) {
+      this.searchBarInput.value = '';
+      this.searchBarInput.placeholder = 'Search entries...';
     }
   }
 

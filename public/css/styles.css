@@ -212,8 +212,11 @@ body {
   border: 2px solid var(--border-color);
   border-radius: 12px;
   padding: var(--spacing-xs) var(--spacing-sm);
-  cursor: pointer;
-  transition: var(--transition);
+  cursor: text;
+  /* Only transition specific properties to avoid layout shift */
+  transition: border-color 0.2s ease, background 0.2s ease, border-radius 0.3s ease;
+  /* Add transparent shadow to prevent layout shift */
+  box-shadow: 0 0 0 3px transparent;
 }
 
 .search-bar:hover {
@@ -224,6 +227,7 @@ body {
 .search-bar.active {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px var(--accent-color-light);
+  border-radius: 12px 12px 0 0;
 }
 
 .search-icon {
@@ -238,7 +242,7 @@ body {
   outline: none;
   color: var(--text-primary);
   font-size: 0.95rem;
-  cursor: pointer;
+  cursor: text;
 }
 
 .search-bar-input::placeholder {
@@ -248,12 +252,13 @@ body {
 
 .search-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   left: 0;
   right: 0;
   background: var(--bg-secondary);
   border: 2px solid var(--accent-color);
-  border-radius: 12px;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
   box-shadow: 0 8px 32px var(--shadow);
   backdrop-filter: blur(20px);
   z-index: 1000;
@@ -270,27 +275,11 @@ body {
   pointer-events: all;
 }
 
-.search-dropdown-input {
-  width: 100%;
-  padding: var(--spacing-sm);
-  font-size: 1rem;
-  border: none;
-  border-bottom: 2px solid var(--border-color);
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  outline: none;
-  border-radius: 10px 10px 0 0;
-}
-
-.search-dropdown-input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.6;
-}
-
 .search-dropdown-results {
   max-height: 400px;
   overflow-y: auto;
   padding: var(--spacing-sm);
+  border-top: 2px solid var(--border-color);
 }
 
 .search-result-item {
@@ -306,7 +295,6 @@ body {
 .search-result-item:hover {
   border-color: var(--accent-color);
   background: var(--accent-color-light);
-  transform: translateX(4px);
 }
 
 .search-result-title {

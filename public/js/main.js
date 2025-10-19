@@ -258,6 +258,18 @@ class JournalApp {
     return `${year}-${month}-${day}`;
   }
 
+  // Load entry by date (used by search)
+  loadEntryByDate(dateKey) {
+    const entries = this.entriesByDate[dateKey];
+    if (entries && entries.length > 0) {
+      // Show editor with existing entry
+      this.showEditorView(entries[0]);
+    } else {
+      // Show editor for new entry on this date
+      this.showEditorView(null, dateKey);
+    }
+  }
+
   // EDITOR METHODS
   loadEntry(entry) {
     this.currentEntry = entry;
@@ -617,4 +629,6 @@ class JournalApp {
 let journalApp;
 document.addEventListener('DOMContentLoaded', () => {
   journalApp = new JournalApp();
+  // Expose as window.mainApp for search functionality
+  window.mainApp = journalApp;
 });
