@@ -146,7 +146,8 @@ class App {
 
       const title = entry.title || entry.displayTitle || 'Untitled';
       const preview = entry.content.substring(0, 100) + (entry.content.length > 100 ? '...' : '');
-      const date = new Date(entry.createdAt).toLocaleDateString('en-US', {
+      // Use the journal date (entry.date), not the created date
+      const date = new Date(entry.date).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
         year: 'numeric'
@@ -249,7 +250,8 @@ class App {
 
         const title = entry.title || entry.displayTitle || 'Untitled';
         const preview = entry.content.substring(0, 150) + (entry.content.length > 150 ? '...' : '');
-        const date = new Date(entry.createdAt).toLocaleDateString('en-US', {
+        // Use the journal date (entry.date), not the created date
+        const date = new Date(entry.date).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
           year: 'numeric'
@@ -299,7 +301,8 @@ class App {
 
         const title = entry.title || entry.displayTitle || 'Untitled';
         const preview = entry.content.substring(0, 100) + (entry.content.length > 100 ? '...' : '');
-        const date = new Date(entry.createdAt).toLocaleDateString('en-US', {
+        // Use the journal date (entry.date), not the created date
+        const date = new Date(entry.date).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric',
           year: 'numeric'

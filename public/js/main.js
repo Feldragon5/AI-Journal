@@ -277,7 +277,8 @@ class JournalApp {
     this.titleInput.value = entry.title || '';
     this.contentTextarea.value = entry.content || '';
     this.updateWordCount();
-    this.updateDate(new Date(entry.createdAt));
+    // Use the journal date (entry.date), not the created date
+    this.updateDate(new Date(entry.date));
 
     // Show modified date if different from created date
     if (entry.updatedAt && entry.updatedAt !== entry.createdAt) {

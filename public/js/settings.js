@@ -254,18 +254,29 @@ class Settings {
       text += '='.repeat(60) + '\n\n';
 
       this.entries.forEach(entry => {
-        const date = new Date(entry.createdAt).toLocaleString('en-US', {
+        // Use the journal date (entry.date)
+        const date = new Date(entry.date).toLocaleDateString('en-US', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
+          day: 'numeric'
         });
+
+        // Include modified timestamp if available
+        let timestamp = '';
+        if (entry.updatedAt && entry.updatedAt !== entry.createdAt) {
+          const modified = new Date(entry.updatedAt).toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+          timestamp = ` (Modified: ${modified})`;
+        }
 
         text += '-'.repeat(60) + '\n';
         text += `${entry.title || 'Untitled Entry'}\n`;
-        text += `${date}\n`;
+        text += `${date}${timestamp}\n`;
         text += '-'.repeat(60) + '\n\n';
         text += entry.content + '\n\n\n';
       });

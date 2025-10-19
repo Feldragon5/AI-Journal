@@ -38,6 +38,13 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  /* Prevent overscroll/rubber band effect */
+  overscroll-behavior-y: none;
+}
+
+html {
+  /* Prevent overscroll on the html element as well */
+  overscroll-behavior-y: none;
 }
 
 /* Aurora Background */
