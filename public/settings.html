@@ -258,10 +258,21 @@
 					style="text-decoration: none; cursor: pointer"
 					>⭐ Aurora Journal</a
 				>
-				<div class="nav-links">
-					<a href="/settings" class="nav-link active">Settings</a>
+
+				<!-- Dropdown Search Bar -->
+				<div class="search-dropdown-container">
+					<div class="search-bar" id="searchBar">
+						<span class="search-icon">🔍</span>
+						<input type="text" id="searchBarInput" class="search-bar-input" placeholder="Search entries..." readonly>
+					</div>
+					<div class="search-dropdown" id="searchDropdown">
+						<input type="text" id="searchDropdownInput" class="search-dropdown-input" placeholder="Type to search...">
+						<div id="searchDropdownResults" class="search-dropdown-results"></div>
+					</div>
 				</div>
+
 				<div class="nav-controls">
+					<button class="btn btn-secondary" onclick="window.location.href='/settings'">Settings</button>
 				</div>
 			</div>
 		</nav>
