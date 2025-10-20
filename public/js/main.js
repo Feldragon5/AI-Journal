@@ -549,14 +549,15 @@ class JournalApp {
       const card = document.createElement('div');
       card.className = 'question-card-item';
       card.dataset.index = index;
+      card.dataset.question = question; // Store the actual question text
 
       card.innerHTML = `
         <button class="question-card-close" data-action="dismiss" title="Dismiss">✕</button>
         <div class="question-text">${this.escapeHtml(question)}</div>
-        <textarea class="answer-input" placeholder="Type your answer here..." data-index="${index}"></textarea>
+        <textarea class="answer-input" placeholder="Type your answer here..."></textarea>
         <div class="question-card-footer">
           <button class="question-card-refresh" data-action="refresh" title="Regenerate question">↻</button>
-          <button class="question-card-submit" data-action="submit" data-index="${index}">Add to Entry</button>
+          <button class="question-card-submit" data-action="submit">Add to Entry</button>
         </div>
       `;
 
@@ -566,9 +567,9 @@ class JournalApp {
       const submitBtn = card.querySelector('[data-action="submit"]');
       const answerInput = card.querySelector('.answer-input');
 
-      closeBtn.addEventListener('click', () => this.dismissQuestion(index));
-      refreshBtn.addEventListener('click', () => this.refreshQuestion(index));
-      submitBtn.addEventListener('click', () => this.submitAnswer(index));
+      closeBtn.addEventListener('click', () => this.dismissQuestion(card));
+      refreshBtn.addEventListener('click', () => this.refreshQuestion(card));
+      submitBtn.addEventListener('click', () => this.submitAnswer(card));
 
       // Enable/disable submit button based on input
       answerInput.addEventListener('input', (e) => {
@@ -586,11 +587,11 @@ class JournalApp {
     this.closeSidebar();
   }
 
-  async refreshQuestion(index) {
-    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+  async refreshQuestion(card) {
     if (!card) return;
 
     const questionText = card.querySelector('.question-text');
+    const oldQuestion = card.dataset.question;
     questionText.innerHTML = '<span style="opacity: 0.5;">🔄 Generating new question...</span>';
 
     try {
@@ -600,31 +601,30 @@ class JournalApp {
       if (questionsResult.questions && questionsResult.questions.length > 0) {
         // Get a random new question
         const newQuestion = questionsResult.questions[Math.floor(Math.random() * questionsResult.questions.length)];
-        this.questions[index] = newQuestion;
+        card.dataset.question = newQuestion; // Update stored question
         questionText.textContent = newQuestion;
         showToast('Question refreshed!', 'success');
       } else {
-        questionText.textContent = this.questions[index];
+        questionText.textContent = oldQuestion;
         showToast('Could not generate new question', 'error');
       }
     } catch (error) {
       console.error('Error refreshing question:', error);
-      questionText.textContent = this.questions[index];
+      questionText.textContent = oldQuestion;
       showToast('Failed to refresh question', 'error');
     }
   }
 
-  dismissQuestion(index) {
-    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+  dismissQuestion(card) {
     if (!card) return;
 
     card.style.animation = 'fadeOut 0.3s ease';
     setTimeout(() => {
       card.remove();
-      this.questions.splice(index, 1);
 
-      // If no questions left, hide sidebar
-      if (this.questions.length === 0) {
+      // Check if any cards left
+      const remainingCards = this.questionsCards.querySelectorAll('.question-card-item');
+      if (remainingCards.length === 0) {
         setTimeout(() => {
           this.closeSidebar();
           showToast('All questions dismissed', 'info');
@@ -633,8 +633,7 @@ class JournalApp {
     }, 300);
   }
 
-  async submitAnswer(index) {
-    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+  async submitAnswer(card) {
     if (!card) return;
 
     const answerInput = card.querySelector('.answer-input');
@@ -642,7 +641,7 @@ class JournalApp {
 
     if (!answer) return;
 
-    const question = this.questions[index];
+    const question = card.dataset.question; // Get question from card data attribute
 
     try {
       showLoading('Integrating your answer...');
@@ -655,8 +654,8 @@ class JournalApp {
         this.hasUnsavedChanges = true;
         this.updateWordCount();
 
-        // Remove the answered question
-        this.dismissQuestion(index);
+        // Remove the answered question card
+        this.dismissQuestion(card);
 
         hideLoading();
         showToast('Answer integrated into your entry!', 'success');
