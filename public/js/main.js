@@ -36,15 +36,10 @@ class JournalApp {
     this.deleteBtn = document.getElementById('deleteBtn');
     this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
 
-    // Questions container elements (new card-based UI)
-    this.questionsContainer = document.getElementById('questionsContainer');
-    this.questionsCards = document.getElementById('questionsCards');
-    this.closeQuestionsBtn = document.getElementById('closeQuestions');
-
-    // Old sidebar elements (keep for backward compatibility)
+    // Questions sidebar elements
     this.questionsSidebar = document.getElementById('questionsSidebar');
     this.sidebarTitle = document.getElementById('sidebarTitle');
-    this.sidebarContent = document.getElementById('sidebarContent');
+    this.questionsCards = document.getElementById('questionsCards');
     this.closeSidebarBtn = document.getElementById('closeSidebar');
 
     this.init();
@@ -87,14 +82,9 @@ class JournalApp {
     this.enhanceBtn.addEventListener('click', () => this.enhanceWithAI());
     this.deleteBtn.addEventListener('click', () => this.deleteEntry());
 
-    // Questions close button
-    if (this.closeQuestionsBtn) {
-      this.closeQuestionsBtn.addEventListener('click', () => this.hideQuestions());
-    }
-
-    // Old sidebar close button
+    // Sidebar close button
     if (this.closeSidebarBtn) {
-      this.closeSidebarBtn.addEventListener('click', () => this.hideSidebar());
+      this.closeSidebarBtn.addEventListener('click', () => this.closeSidebar());
     }
 
     // Editor content changes - start autosave timer
@@ -545,11 +535,14 @@ class JournalApp {
     this.closeSidebar();
   }
 
-  // NEW QUESTIONS CARD UI
+  // NEW QUESTIONS CARD UI (in sidebar)
   showQuestionsCards() {
-    if (!this.questionsContainer || !this.questionsCards) return;
+    if (!this.questionsCards) return;
 
-    this.questionsContainer.style.display = 'block';
+    // Show the sidebar
+    this.showSidebar();
+    this.sidebarTitle.textContent = '💭 Reflection Questions';
+
     this.questionsCards.innerHTML = '';
 
     this.questions.forEach((question, index) => {
@@ -558,35 +551,39 @@ class JournalApp {
       card.dataset.index = index;
 
       card.innerHTML = `
+        <button class="question-card-close" data-action="dismiss" title="Dismiss">✕</button>
         <div class="question-text">${this.escapeHtml(question)}</div>
-        <div class="question-card-actions">
-          <button class="icon-btn" data-action="refresh" title="Regenerate question">🔄</button>
-          <button class="icon-btn" data-action="dismiss" title="Dismiss question">✕</button>
+        <textarea class="answer-input" placeholder="Type your answer here..." data-index="${index}"></textarea>
+        <div class="question-card-footer">
+          <button class="question-card-refresh" data-action="refresh" title="Regenerate question">↻</button>
+          <button class="question-card-submit" data-action="submit" data-index="${index}">Add to Entry</button>
         </div>
       `;
 
-      // Add click event listeners to buttons
+      // Add event listeners
+      const closeBtn = card.querySelector('[data-action="dismiss"]');
       const refreshBtn = card.querySelector('[data-action="refresh"]');
-      const dismissBtn = card.querySelector('[data-action="dismiss"]');
+      const submitBtn = card.querySelector('[data-action="submit"]');
+      const answerInput = card.querySelector('.answer-input');
 
+      closeBtn.addEventListener('click', () => this.dismissQuestion(index));
       refreshBtn.addEventListener('click', () => this.refreshQuestion(index));
-      dismissBtn.addEventListener('click', () => this.dismissQuestion(index));
+      submitBtn.addEventListener('click', () => this.submitAnswer(index));
 
-      // Make card clickable to answer
-      card.addEventListener('click', (e) => {
-        if (!e.target.closest('.question-card-actions')) {
-          this.answerQuestion(index, question);
-        }
+      // Enable/disable submit button based on input
+      answerInput.addEventListener('input', (e) => {
+        submitBtn.disabled = e.target.value.trim().length === 0;
       });
+
+      // Initially disable submit button
+      submitBtn.disabled = true;
 
       this.questionsCards.appendChild(card);
     });
   }
 
   hideQuestions() {
-    if (this.questionsContainer) {
-      this.questionsContainer.style.display = 'none';
-    }
+    this.closeSidebar();
   }
 
   async refreshQuestion(index) {
@@ -626,24 +623,32 @@ class JournalApp {
       card.remove();
       this.questions.splice(index, 1);
 
-      // If no questions left, hide container
+      // If no questions left, hide sidebar
       if (this.questions.length === 0) {
-        this.hideQuestions();
-        showToast('All questions dismissed', 'info');
+        setTimeout(() => {
+          this.closeSidebar();
+          showToast('All questions dismissed', 'info');
+        }, 300);
       }
     }, 300);
   }
 
-  async answerQuestion(index, question) {
-    const answer = prompt(`💭 ${question}\n\nYour answer:`);
+  async submitAnswer(index) {
+    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+    if (!card) return;
 
-    if (!answer || answer.trim() === '') return;
+    const answerInput = card.querySelector('.answer-input');
+    const answer = answerInput.value.trim();
+
+    if (!answer) return;
+
+    const question = this.questions[index];
 
     try {
       showLoading('Integrating your answer...');
 
       const currentContent = this.contentTextarea.value.trim();
-      const result = await API.insertQuestionAnswer(currentContent, question, answer.trim());
+      const result = await API.insertQuestionAnswer(currentContent, question, answer);
 
       if (result.updatedContent) {
         this.contentTextarea.value = result.updatedContent;
