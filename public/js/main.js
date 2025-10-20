@@ -36,7 +36,12 @@ class JournalApp {
     this.deleteBtn = document.getElementById('deleteBtn');
     this.autoSaveIndicator = document.getElementById('autoSaveIndicator');
 
-    // Sidebar elements
+    // Questions container elements (new card-based UI)
+    this.questionsContainer = document.getElementById('questionsContainer');
+    this.questionsCards = document.getElementById('questionsCards');
+    this.closeQuestionsBtn = document.getElementById('closeQuestions');
+
+    // Old sidebar elements (keep for backward compatibility)
     this.questionsSidebar = document.getElementById('questionsSidebar');
     this.sidebarTitle = document.getElementById('sidebarTitle');
     this.sidebarContent = document.getElementById('sidebarContent');
@@ -81,6 +86,16 @@ class JournalApp {
     this.saveBtn.addEventListener('click', () => this.doneEditing());
     this.enhanceBtn.addEventListener('click', () => this.enhanceWithAI());
     this.deleteBtn.addEventListener('click', () => this.deleteEntry());
+
+    // Questions close button
+    if (this.closeQuestionsBtn) {
+      this.closeQuestionsBtn.addEventListener('click', () => this.hideQuestions());
+    }
+
+    // Old sidebar close button
+    if (this.closeSidebarBtn) {
+      this.closeSidebarBtn.addEventListener('click', () => this.hideSidebar());
+    }
 
     // Editor content changes - start autosave timer
     this.contentTextarea.addEventListener('input', () => {
@@ -461,15 +476,8 @@ class JournalApp {
     this.isEnhancing = true;
 
     try {
-      // Show sidebar with loading state
-      this.showSidebar();
-      this.sidebarTitle.textContent = '✨ Enhancing...';
-      this.sidebarContent.innerHTML = `
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Processing your entry...</p>
-        </div>
-      `;
+      // Show loading state
+      showLoading('✨ Enhancing your entry...');
 
       // Store original content
       if (!this.currentEntry || !this.currentEntry.rawContent) {
@@ -488,28 +496,25 @@ class JournalApp {
       }
 
       // Generate questions
-      this.sidebarTitle.textContent = '💭 Reflection Questions';
-      this.sidebarContent.innerHTML = `
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Generating questions...</p>
-        </div>
-      `;
+      showLoading('💭 Generating reflection questions...');
 
       const questionsResult = await API.generateQuestions(enhanceResult.enhancedContent || content);
 
+      hideLoading();
+
       if (questionsResult.questions && questionsResult.questions.length > 0) {
         this.questions = questionsResult.questions;
-        this.currentQuestionIndex = 0;
-        this.showNextQuestion();
+        this.showQuestionsCards();
+        showToast('Entry enhanced! Answer the questions below to add more depth.', 'success');
       } else {
-        this.sidebarContent.innerHTML = '<p class="loading-state">No questions generated. You can save your entry now.</p>';
-        this.isEnhancing = false;
+        showToast('Entry enhanced successfully!', 'success');
       }
+
+      this.isEnhancing = false;
 
     } catch (error) {
       console.error('Error enhancing entry:', error);
-      this.sidebarContent.innerHTML = '<p class="loading-state" style="color: var(--text-secondary);">Enhancement failed. Please try again.</p>';
+      hideLoading();
       showToast('Failed to enhance entry. Please try again.', 'error');
       this.isEnhancing = false;
     }
@@ -534,6 +539,128 @@ class JournalApp {
     this.isEnhancing = false;
     this.questions = [];
     this.currentQuestionIndex = 0;
+  }
+
+  hideSidebar() {
+    this.closeSidebar();
+  }
+
+  // NEW QUESTIONS CARD UI
+  showQuestionsCards() {
+    if (!this.questionsContainer || !this.questionsCards) return;
+
+    this.questionsContainer.style.display = 'block';
+    this.questionsCards.innerHTML = '';
+
+    this.questions.forEach((question, index) => {
+      const card = document.createElement('div');
+      card.className = 'question-card-item';
+      card.dataset.index = index;
+
+      card.innerHTML = `
+        <div class="question-text">${this.escapeHtml(question)}</div>
+        <div class="question-card-actions">
+          <button class="icon-btn" data-action="refresh" title="Regenerate question">🔄</button>
+          <button class="icon-btn" data-action="dismiss" title="Dismiss question">✕</button>
+        </div>
+      `;
+
+      // Add click event listeners to buttons
+      const refreshBtn = card.querySelector('[data-action="refresh"]');
+      const dismissBtn = card.querySelector('[data-action="dismiss"]');
+
+      refreshBtn.addEventListener('click', () => this.refreshQuestion(index));
+      dismissBtn.addEventListener('click', () => this.dismissQuestion(index));
+
+      // Make card clickable to answer
+      card.addEventListener('click', (e) => {
+        if (!e.target.closest('.question-card-actions')) {
+          this.answerQuestion(index, question);
+        }
+      });
+
+      this.questionsCards.appendChild(card);
+    });
+  }
+
+  hideQuestions() {
+    if (this.questionsContainer) {
+      this.questionsContainer.style.display = 'none';
+    }
+  }
+
+  async refreshQuestion(index) {
+    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+    if (!card) return;
+
+    const questionText = card.querySelector('.question-text');
+    questionText.innerHTML = '<span style="opacity: 0.5;">🔄 Generating new question...</span>';
+
+    try {
+      const content = this.contentTextarea.value.trim();
+      const questionsResult = await API.generateQuestions(content);
+
+      if (questionsResult.questions && questionsResult.questions.length > 0) {
+        // Get a random new question
+        const newQuestion = questionsResult.questions[Math.floor(Math.random() * questionsResult.questions.length)];
+        this.questions[index] = newQuestion;
+        questionText.textContent = newQuestion;
+        showToast('Question refreshed!', 'success');
+      } else {
+        questionText.textContent = this.questions[index];
+        showToast('Could not generate new question', 'error');
+      }
+    } catch (error) {
+      console.error('Error refreshing question:', error);
+      questionText.textContent = this.questions[index];
+      showToast('Failed to refresh question', 'error');
+    }
+  }
+
+  dismissQuestion(index) {
+    const card = this.questionsCards.querySelector(`[data-index="${index}"]`);
+    if (!card) return;
+
+    card.style.animation = 'fadeOut 0.3s ease';
+    setTimeout(() => {
+      card.remove();
+      this.questions.splice(index, 1);
+
+      // If no questions left, hide container
+      if (this.questions.length === 0) {
+        this.hideQuestions();
+        showToast('All questions dismissed', 'info');
+      }
+    }, 300);
+  }
+
+  async answerQuestion(index, question) {
+    const answer = prompt(`💭 ${question}\n\nYour answer:`);
+
+    if (!answer || answer.trim() === '') return;
+
+    try {
+      showLoading('Integrating your answer...');
+
+      const currentContent = this.contentTextarea.value.trim();
+      const result = await API.insertQuestionAnswer(currentContent, question, answer.trim());
+
+      if (result.updatedContent) {
+        this.contentTextarea.value = result.updatedContent;
+        this.hasUnsavedChanges = true;
+        this.updateWordCount();
+
+        // Remove the answered question
+        this.dismissQuestion(index);
+
+        hideLoading();
+        showToast('Answer integrated into your entry!', 'success');
+      }
+    } catch (error) {
+      console.error('Error inserting answer:', error);
+      hideLoading();
+      showToast('Failed to integrate answer', 'error');
+    }
   }
 
   showNextQuestion() {

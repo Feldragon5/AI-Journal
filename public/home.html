@@ -162,6 +162,17 @@
             </div>
           </div>
 
+          <!-- AI Reflection Questions Cards (appears below header after enhance) -->
+          <div id="questionsContainer" class="questions-container" style="display: none;">
+            <div class="questions-header">
+              <h3>💭 Reflection Questions</h3>
+              <button id="closeQuestions" class="icon-btn">✕</button>
+            </div>
+            <div id="questionsCards" class="questions-cards">
+              <!-- Question cards will be inserted here -->
+            </div>
+          </div>
+
           <textarea id="entryContent" class="entry-content" placeholder="Start writing your thoughts..."></textarea>
 
           <div class="editor-actions">
@@ -174,20 +185,6 @@
       </div>
     </div>
   </div>
-
-  <!-- AI Questions Sidebar (hidden until enhance is clicked) -->
-  <aside class="questions-sidebar" id="questionsSidebar" style="display: none;">
-    <div class="questions-sidebar-header">
-      <h3 id="sidebarTitle">✨ Enhancing...</h3>
-      <button id="closeSidebar" class="icon-btn">✕</button>
-    </div>
-    <div class="questions-sidebar-content" id="sidebarContent">
-      <div class="loading-state">
-        <div class="spinner"></div>
-        <p>Processing your entry...</p>
-      </div>
-    </div>
-  </aside>
 
   <!-- Search Modal -->
   <div id="searchModal" class="modal">
