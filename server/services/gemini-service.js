@@ -112,14 +112,27 @@ class GeminiService {
       .replace('{question}', question)
       .replace('{answer}', answer);
 
+    console.log('--- Gemini insertAnswer Request ---');
+    console.log('Prompt length:', prompt.length);
+    console.log('Prompt preview (first 300 chars):', prompt.substring(0, 300));
+    console.log('Temperature:', config.temperature);
+    console.log('MaxOutputTokens:', config.maxOutputTokens);
+
     try {
       const response = await this.makeRequestWithRetry(prompt, {
         temperature: config.temperature,
         maxOutputTokens: config.maxOutputTokens
       });
 
+      console.log('--- Gemini insertAnswer Response ---');
+      console.log('Response length:', response?.length || 0);
+      console.log('Response preview (first 200 chars):', response?.substring(0, 200));
+
       return response.trim();
     } catch (error) {
+      console.error('--- Gemini insertAnswer ERROR ---');
+      console.error('Error type:', error.constructor.name);
+      console.error('Error message:', error.message);
       console.error('Error inserting answer:', error);
       throw error;
     }

@@ -47,19 +47,32 @@ router.post('/insert-answer', async (req, res) => {
   try {
     const { originalEntry, question, answer } = req.body;
 
+    console.log('\n=== INSERT ANSWER REQUEST ===');
+    console.log('Original Entry Length:', originalEntry?.length || 0);
+    console.log('Question:', question);
+    console.log('Answer:', answer);
+
     if (!originalEntry || !question || !answer) {
+      console.error('Missing required fields');
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     if (answer.trim().length < 2) {
+      console.error('Answer too short');
       return res.status(400).json({ error: 'Answer too short' });
     }
 
+    console.log('Calling geminiService.insertAnswer...');
     const updatedContent = await geminiService.insertAnswer(originalEntry, question, answer);
+
+    console.log('✓ Success! Updated Content Length:', updatedContent?.length || 0);
+    console.log('Updated Content Preview:', updatedContent?.substring(0, 100) + '...');
+
     res.json({ updatedContent });
   } catch (error) {
-    console.error('AI insert answer error:', error);
-    res.status(500).json({ error: 'Failed to insert answer' });
+    console.error('✗ AI insert answer error:', error.message);
+    console.error('Full error:', error);
+    res.status(500).json({ error: 'Failed to insert answer: ' + error.message });
   }
 });
 
