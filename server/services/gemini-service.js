@@ -62,7 +62,7 @@ class GeminiService {
       .replace('{entryExcerpt}', entryExcerpt);
 
     try {
-      const response = await this.makeRequest(prompt, {
+      const response = await this.makeRequestWithRetry(prompt, {
         temperature: config.temperature,
         maxOutputTokens: config.maxOutputTokens
       });
@@ -113,7 +113,7 @@ class GeminiService {
       .replace('{answer}', answer);
 
     try {
-      const response = await this.makeRequest(prompt, {
+      const response = await this.makeRequestWithRetry(prompt, {
         temperature: config.temperature,
         maxOutputTokens: config.maxOutputTokens
       });
@@ -137,7 +137,7 @@ class GeminiService {
       .replace('{content}', content);
 
     try {
-      const response = await this.makeRequest(prompt, {
+      const response = await this.makeRequestWithRetry(prompt, {
         temperature: config.temperature,
         maxOutputTokens: config.maxOutputTokens
       });
@@ -146,6 +146,32 @@ class GeminiService {
     } catch (error) {
       console.error('Error enhancing entry:', error);
       throw error;
+    }
+  }
+
+  async makeRequestWithRetry(prompt, config = {}, retries = 2) {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        return await this.makeRequest(prompt, config);
+      } catch (error) {
+        const isLastAttempt = attempt === retries;
+
+        // Don't retry on certain errors
+        const shouldNotRetry =
+          error.message.includes('API key') ||
+          error.message.includes('quota') ||
+          error.message.includes('HTTP 400') ||
+          error.message.includes('HTTP 403');
+
+        if (isLastAttempt || shouldNotRetry) {
+          throw error;
+        }
+
+        // Wait before retrying (exponential backoff)
+        const waitTime = Math.pow(2, attempt) * 1000; // 1s, 2s, 4s...
+        console.log(`Retry attempt ${attempt + 1} after ${waitTime}ms...`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
     }
   }
 
@@ -183,27 +209,62 @@ class GeminiService {
         });
 
         res.on('end', () => {
+          // Check HTTP status code first
+          if (res.statusCode !== 200) {
+            console.error(`Gemini API returned status ${res.statusCode}`);
+            console.error('Response:', responseData.substring(0, 500));
+            reject(new Error(`Gemini API error: HTTP ${res.statusCode}`));
+            return;
+          }
+
+          // Check if response looks like HTML (error page)
+          if (responseData.trim().startsWith('<!DOCTYPE') || responseData.trim().startsWith('<html')) {
+            console.error('Gemini API returned HTML instead of JSON');
+            console.error('Response:', responseData.substring(0, 500));
+            reject(new Error('Gemini API returned an error page. Please check your API key and quota.'));
+            return;
+          }
+
+          // Check if response is empty
+          if (!responseData || responseData.trim().length === 0) {
+            console.error('Gemini API returned empty response');
+            reject(new Error('Gemini API returned empty response'));
+            return;
+          }
+
           try {
             const parsed = JSON.parse(responseData);
 
             if (parsed.error) {
-              reject(new Error(parsed.error.message));
+              console.error('Gemini API error:', parsed.error);
+              reject(new Error(parsed.error.message || 'Unknown Gemini API error'));
               return;
             }
 
             if (parsed.candidates && parsed.candidates[0]?.content?.parts?.[0]?.text) {
               resolve(parsed.candidates[0].content.parts[0].text);
             } else {
+              console.error('Unexpected response format:', JSON.stringify(parsed).substring(0, 200));
               reject(new Error('Unexpected response format from Gemini API'));
             }
           } catch (error) {
-            reject(new Error('Failed to parse Gemini API response: ' + error.message));
+            console.error('Failed to parse Gemini response as JSON');
+            console.error('Response starts with:', responseData.substring(0, 200));
+            console.error('Parse error:', error.message);
+            reject(new Error(`Failed to parse Gemini API response: ${error.message}`));
           }
         });
       });
 
       req.on('error', (error) => {
-        reject(error);
+        console.error('Network error calling Gemini API:', error.message);
+        reject(new Error(`Network error: ${error.message}`));
+      });
+
+      // Add timeout to prevent hanging requests (30 seconds)
+      req.setTimeout(30000, () => {
+        req.destroy();
+        reject(new Error('Gemini API request timeout after 30 seconds'));
       });
 
       req.write(data);
