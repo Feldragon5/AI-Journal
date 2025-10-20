@@ -86,6 +86,16 @@ const API = {
     return response.json();
   },
 
+  async insertQuestionAnswer(originalEntry, question, answer) {
+    const response = await fetch(`${API_BASE_URL}/ai/insert-answer`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ originalEntry, question, answer })
+    });
+    if (!response.ok) throw new Error('Failed to insert answer');
+    return response.json();
+  },
+
   // Settings endpoints
   async getSettings() {
     const response = await fetch(`${API_BASE_URL}/ai/settings`);

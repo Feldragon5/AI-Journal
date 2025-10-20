@@ -42,6 +42,27 @@ router.post('/enhance', async (req, res) => {
   }
 });
 
+// Insert question answer into entry
+router.post('/insert-answer', async (req, res) => {
+  try {
+    const { originalEntry, question, answer } = req.body;
+
+    if (!originalEntry || !question || !answer) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    if (answer.trim().length < 2) {
+      return res.status(400).json({ error: 'Answer too short' });
+    }
+
+    const updatedContent = await geminiService.insertAnswer(originalEntry, question, answer);
+    res.json({ updatedContent });
+  } catch (error) {
+    console.error('AI insert answer error:', error);
+    res.status(500).json({ error: 'Failed to insert answer' });
+  }
+});
+
 // Get settings
 router.get('/settings', async (req, res) => {
   try {
